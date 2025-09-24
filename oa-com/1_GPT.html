@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Remote Helpers LMS – HTML</title>
+  <style>
+    :root{
+      /* L I G H T  T H E M E */
+      --bg: #f8fafc;              /* lighter gray background (was darker) */
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e5e7eb;
+      --panel: #ffffff;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79,70,229,.1);
+      --success: #059669;
+      --sidebar-text: #1f2937;    /* darker text for left panel */
+    }
+    :root.dark{
+      /* D A R K  T H E M E */
+      --bg: #0b1220;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --border: #1f2937;
+      --panel: #0f172a;
+      --accent: #818cf8;
+      --accent-soft: rgba(129,140,248,.15);
+      --success: #10b981;
+      --sidebar-text: #cbd5e1;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, Noto Sans, "Apple Color Emoji","Segoe UI Emoji"}
+    a{color:inherit;text-decoration:none}
+    .app{display:flex;min-height:100svh}
+
+    /* Sidebar */
+    .sidebar{position:sticky;top:0;height:100svh;width:280px;border-right:1px solid var(--border);background:color-mix(in srgb, var(--panel) 92%, transparent);backdrop-filter:saturate(1.2) blur(4px)}
+    .brand{display:flex;align-items:center;justify-content:space-between;padding:14px 12px}
+    .brand-name{font-weight:600;color:var(--sidebar-text)}
+    .logo{width:32px;height:32px;border-radius:12px;background:var(--accent)}
+    .nav{padding:0 8px 20px}
+    .nav a{display:flex;gap:10px;align-items:center;padding:10px 12px;margin:4px 0;border-radius:12px;color:var(--sidebar-text)}
+    .nav a:hover{background:color-mix(in srgb, var(--text) 6%, transparent)}
+    .nav a.active{background:var(--accent-soft);color:color-mix(in srgb, var(--accent) 50%, var(--sidebar-text))}
+    .divider{border-top:1px solid var(--border);margin:12px 8px 0;padding-top:12px}
+
+    /* Main grid */
+    .grid{display:grid;grid-template-columns:1fr 360px;flex:1;min-width:0}
+    @media (max-width:1200px){.grid{grid-template-columns:1fr}}
+
+    /* Header */
+    .header{position:sticky;top:0;z-index:10;grid-column:1/-1;border-bottom:1px solid var(--border);background:color-mix(in srgb, var(--panel) 92%, transparent);backdrop-filter:saturate(1.2) blur(4px)}
+    .header-inner{display:flex;gap:12px;align-items:center;max-width:1200px;margin:0 auto;padding:12px 16px}
+    .search{flex:0 1 420px}
+    .search input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:var(--text)}
+    .ghost{background:none;border:0;padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+    .ghost:hover{background:color-mix(in srgb, var(--text) 6%, transparent)}
+
+    /* Content */
+    main{max-width:1000px;margin:0 auto;padding:20px 16px}
+    .hero{aspect-ratio:16/7;width:100%;border:1px solid var(--border);border-radius:24px;overflow:hidden;background:#e2e8f0}
+    .hero img{width:100%;height:100%;object-fit:cover}
+    h1{margin:18px 0 4px;font-size:clamp(24px,2.8vw,32px)}
+    .sub{color:var(--muted);margin:0}
+    .row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;justify-content:space-between}
+    .progress{height:8px;border-radius:999px;background:color-mix(in srgb, var(--text) 8%, transparent);overflow:hidden}
+    .progress > i{display:block;height:100%;background:var(--accent)}
+    .btn{background:var(--accent);color:#fff;border:0;border-radius:16px;padding:10px 14px;font-weight:600;cursor:pointer}
+
+    .cards{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:640px){.cards{grid-template-columns:1fr}}
+    .card{border:1px solid var(--border);background:var(--panel);border-radius:16px;padding:12px}
+    .card h3{margin:0 0 6px;font-size:16px}
+    .instructor{display:flex;gap:10px;align-items:center}
+    .avatar{width:48px;height:48px;border-radius:999px;object-fit:cover}
+    .muted{color:var(--muted);font-size:14px}
+
+    /* Right rail */
+    .rail{position:sticky;top:56px;height:calc(100svh - 56px);overflow:auto;border-left:1px solid var(--border);padding:16px;background:color-mix(in srgb, var(--panel) 85%, transparent)}
+    .rail h4{margin:4px 0 8px}
+    .list{list-style:none;margin:0;padding:0}
+    .lesson{display:flex;gap:10px;align-items:center;width:100%;padding:10px;border-radius:12px;cursor:pointer;border:0;background:transparent}
+    .lesson:hover{background:color-mix(in srgb, var(--text) 6%, transparent)}
+    .lesson.active{background:var(--accent-soft)}
+    .time{margin-left:auto;font-size:12px;color:var(--muted)}
+
+    /* Lesson view */
+    .crumbs{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14px;margin:8px 0}
+    .video{margin-top:8px;aspect-ratio:16/9;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#000}
+    .prose p{margin:12px 0}
+    .check{margin-top:12px}
+    .check .opts{display:flex;gap:8px;flex-wrap:wrap}
+    .btn-outline{background:transparent;border:1px solid var(--border);border-radius:12px;padding:8px 10px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Primary">
+      <div class="brand">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo" aria-hidden></div>
+          <span class="brand-name">Remote Helpers LMS</span>
+        </div>
+        <button class="ghost" id="collapse" title="Згорнути">☰</button>
+      </div>
+      <nav class="nav" id="nav">
+        <a href="#" class="active">🏠 <span>Home</span></a>
+        <a href="#">📚 <span>Courses</span></a>
+        <a href="#">🧱 <span>Learning Paths</span></a>
+        <a href="#">🏆 <span>Leaderboard</span></a>
+        <a href="#">🧪 <span>My Tests</span></a>
+        <a href="#">🔖 <span>Bookmarks</span></a>
+        <a href="#">📈 <span>Analytics</span></a>
+        <a href="#">📄 <span>Lesson Library</span></a>
+        <a href="#">🗂️ <span>My Change Requests</span></a>
+        <div class="divider"></div>
+        <a href="#">⇦ <span>Sign out</span></a>
+      </nav>
+    </aside>
+
+    <!-- Main grid -->
+    <section class="grid">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-inner">
+          <div class="search"><input aria-label="Пошук" placeholder="Пошук курсів, уроків…"/></div>
+          <div style="flex:1"></div>
+          <button class="ghost" id="theme">🌓 <span class="hide-sm">Тема</span></button>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <main>
+        <div class="hero">
+          <img src="https://images.unsplash.com/photo-1518773553398-650c184e0bb3?w=1600&q=80&auto=format&fit=crop" alt="Course hero"/>
+        </div>
+        <div class="row">
+          <div>
+            <h1>Simple Swift App</h1>
+            <p class="sub">Build a modern iOS app step by step</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;min-width:260px">
+            <div style="flex:1;min-width:160px">
+              <div class="progress" aria-label="Course progress" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"><i style="width:40%"></i></div>
+            </div>
+            <button class="btn">Start learning</button>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:10px;max-width:70ch">In this course you will create a simple Swift application and learn core concepts including navigation, views, and state. Lessons include short videos, reading, and quick checks.</p>
+
+        <div class="cards" style="margin-top:16px">
+          <div class="card">
+            <h3>Instructor</h3>
+            <div class="instructor">
+              <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80&auto=format&fit=crop" alt="Instructor"/>
+              <div>
+                <div style="font-weight:600">Evelyn Carter</div>
+                <div class="muted">Senior iOS Engineer</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Course progress</h3>
+            <div class="progress" aria-hidden="true"><i id="pctBar" style="width:40%"></i></div>
+            <p class="muted" id="pctText" style="margin:6px 0 0">40% complete</p>
+          </div>
+        </div>
+
+        <article id="lesson" style="margin-top:18px">
+          <div class="crumbs">
+            <a href="#">Course Home</a> ›
+            <a href="#">Module 1 – Fundamentals</a> ›
+            <span>Implement Navigation</span>
+          </div>
+          <h2 style="margin:0 0 8px">Lesson: Implement Navigation</h2>
+          <div class="video">
+            <iframe title="Lesson video" src="https://player.vimeo.com/video/76979871?h=8272103f6e&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" style="width:100%;height:100%;border:0"></iframe>
+          </div>
+          <div class="prose">
+            <p>In this lesson, we build on the foundations and implement the feature step by step. Follow along with the video, then complete the short check below.</p>
+            <ul>
+              <li>Review the starter project and files.</li>
+              <li>Code along and pause where needed.</li>
+              <li>Answer the two quick questions to mark as complete.</li>
+            </ul>
+          </div>
+          <div class="card check">
+            <h3>Quick check</h3>
+            <p class="muted">What UIKit component is commonly used to display a scrollable list of rows?</p>
+            <div class="opts">
+              <button class="btn-outline">UICollectionView</button>
+              <button class="btn-outline" id="correct">UITableView</button>
+              <button class="btn-outline">UIStackView</button>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+              <button class="btn" id="complete">Mark complete</button>
+              <span class="muted">You can revisit anytime</span>
+            </div>
+          </div>
+        </article>
+      </main>
+
+      <!-- Right rail -->
+      <aside class="rail">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Course Outline</div>
+        <h4>Module 1 – Fundamentals</h4>
+        <ul class="list" id="list">
+          <!-- items rendered by JS -->
+        </ul>
+        <div class="card" style="margin-top:12px">
+          <div style="font-weight:600">Need a break?</div>
+          <p class="muted" style="margin:6px 0 0">Your progress is auto‑saved. Come back anytime.</p>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    // Theme persistence
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('lms_theme_html');
+    if(savedTheme === 'dark'){ root.classList.add('dark'); }
+    document.getElementById('theme').addEventListener('click',()=>{
+      root.classList.toggle('dark');
+      localStorage.setItem('lms_theme_html', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Collapse (simple label hide)
+    const nav = document.getElementById('nav');
+    document.getElementById('collapse').addEventListener('click',()=>{
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+      const collapsed = document.querySelector('.sidebar').classList.contains('collapsed');
+      document.querySelectorAll('.nav a span').forEach(s=> s.style.display = collapsed ? 'none' : 'inline');
+      document.querySelector('.sidebar').style.width = collapsed ? '64px' : '280px';
+    });
+
+    // Lessons list
+    const lessons = [
+      {id:'l1', title:'Custom Controls', minutes:6, state:'done'},
+      {id:'l2', title:'Create a Table View', minutes:8, state:'doing'},
+      {id:'l3', title:'Implement Navigation', minutes:7, state:'todo'},
+      {id:'l4', title:'Implement Edit', minutes:10, state:'todo'},
+      {id:'l5', title:'Persist Data', minutes:9, state:'todo'}
+    ];
+    const list = document.getElementById('list');
+    let active = 'l3';
+    function renderList(){
+      list.innerHTML='';
+      lessons.forEach((l,i)=>{
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.className = 'lesson'+(l.id===active?' active':'');
+        btn.innerHTML = `<span>${l.state==='done'?'✅':l.state==='doing'?'🔘':'⚪'}</span>
+                         <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Lesson ${i+1}: ${l.title}</span>
+                         <span class="time">${l.minutes}m</span>`;
+        btn.addEventListener('click',()=>{active=l.id; if(l.state!=='done') l.state='doing'; renderList();});
+        li.appendChild(btn); list.appendChild(li);
+      });
+    }
+    renderList();
+
+    // Mark complete increases progress
+    document.getElementById('complete').addEventListener('click',()=>{
+      const idx = lessons.findIndex(x=>x.id===active);
+      if(idx>-1){ lessons[idx].state='done'; }
+      const done = lessons.filter(l=>l.state==='done').length;
+      const pct = Math.round(done/lessons.length*100);
+      document.getElementById('pctBar').style.width=pct+'%';
+      document.getElementById('pctText').textContent=pct+'% complete';
+      renderList();
+    });
+
+    // Answer button visual
+    document.getElementById('correct').addEventListener('click', (e)=>{
+      e.target.style.borderColor = 'var(--success)';
+      e.target.style.color = 'var(--success)';
+    });
+  </script>
+</body>
+</html>

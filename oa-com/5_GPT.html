@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Academy Course Page</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        #sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: fixed;
+            height: 100%;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #sidebar a {
+            display: block;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        #sidebar a:hover {
+            background-color: var(--hover-bg);
+        }
+
+        #main-content {
+            margin-left: 280px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        #hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('hero-image.jpg') no-repeat center center;
+            background-size: cover;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .course-info {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .module-card {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .module-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .recommended-course-card {
+            background: #f4f4f4;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .recommended-course-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            --bg-color: #181818;
+            --text-color: #f7fafc;
+            --sidebar-bg: #2d3748;
+            --sidebar-text: #f7fafc;
+            --hover-bg: #4f46e5;
+        }
+
+        body {
+            --bg-color: #fafbfc;
+            --text-color: #1a1d23;
+            --sidebar-bg: #f8f9fa;
+            --sidebar-text: #1a1d23;
+            --hover-bg: #4f46e5;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Sidebar Navigation -->
+        <div id="sidebar">
+            <div id="logo">Game Academy</div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Learning Paths</a></li>
+                <li><a href="#">Leaderboard</a></li>
+                <li><a href="#">My Tests</a></li>
+                <li><a href="#">Bookmarks</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Lesson Library</a></li>
+                <li><a href="#">My Change Requests</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <button onclick="toggleTheme()">Toggle Theme</button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div id="main-content">
+            
+            <!-- Hero Section -->
+            <section id="hero">
+                <div class="hero-content">
+                    <span class="course-target">Beginner</span>
+                    <h1 class="course-title">Game Development 101</h1>
+                    <p class="course-description">An introductory course to get you started with game development.</p>
+                </div>
+                <div class="course-info">
+                    <span><i class="icon clock"></i> 10h 30m</span>
+                    <span><i class="icon lesson"></i> 12 Lessons</span>
+                    <span><i class="icon video"></i> 6 Videos</span>
+                    <span><i class="icon presentation"></i> 4 Presentations</span>
+                    <span><i class="icon star"></i> 4.8/5 Rating</span>
+                    <span><i class="icon users"></i> 256 Participants</span>
+                    <button class="reviews-btn" onclick="openReviews()">View Reviews</button>
+                </div>
+            </section>
+
+            <!-- Modules Grid Section -->
+            <section id="modules">
+                <h2>Course Modules</h2>
+                <div class="module-grid">
+                    <div class="module-card">
+                        <img src="module-image.jpg" alt="Module 1">
+                        <h3>Module 1</h3>
+                        <p>Introduction to Game Development</p>
+                    </div>
+                    <div class="module-card">
+                        <img src="module-image.jpg" alt="Module 2">
+                        <h3>Module 2</h3>
+                        <p>Game Mechanics</p>
+                    </div>
+                    <div class="module-card">
+                        <img src="module-image.jpg" alt="Module 3">
+                        <h3>Module 3</h3>
+                        <p>Game Design Theory</p>
+                    </div>
+                    <div class="module-card">
+                        <img src="module-image.jpg" alt="Module 4">
+                        <h3>Module 4</h3>
+                        <p>Building Your First Game</p>
+                    </div>
+                </div>
+                <button class="show-more-btn">Show More</button>
+            </section>
+
+            <!-- Recommended Courses Sidebar -->
+            <section id="recommended-courses">
+                <h2>Recommended Courses</h2>
+                <div class="recommended-course-card">
+                    <img src="recommended-course.jpg" alt="Advanced Game Development">
+                    <h3>Advanced Game Development</h3>
+                    <p>Learn advanced game development techniques.</p>
+                    <div class="course-stats">
+                        <span>8 Lessons</span>
+                        <span>4h 30m</span>
+                    </div>
+                </div>
+                <div class="recommended-course-card">
+                    <img src="recommended-course.jpg" alt="Game Art Design">
+                    <h3>Game Art Design</h3>
+                    <p>Learn how to create art assets for games.</p>
+                    <div class="course-stats">
+                        <span>6 Lessons</span>
+                        <span>3h 20m</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Reviews -->
+    <div id="reviews-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeReviews()">&times;</span>
+            <h2>Course Reviews</h2>
+            <ul>
+                <li>User 1 - Completed ✅</li>
+                <li>User 2 - In Progress ⏳</li>
+                <li>User 3 - Not Started ●</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Dark/Light Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Open Reviews Modal
+        function openReviews() {
+            document.getElementById('reviews-modal').style.display = 'block';
+        }
+
+        // Close Reviews Modal
+        function closeReviews() {
+            document.getElementById('reviews-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub - Corporate Training Platform</title>
+    <style>
+        /* CSS Variables for Theme Management */
+        :root {
+            /* Light Theme Colors */
+            --bg-primary: #F3F5F9;
+            --bg-secondary: #F2F2F0;
+            --text-primary: #0D0D0D;
+            --text-secondary: #819FA7;
+            --border-color: #D9D9D9;
+            --sidebar-bg: #FFFFFF;
+            --card-bg: #FFFFFF;
+            
+            /* Accent Colors */
+            --primary-blue: #004b85;
+            --secondary-blue: #4d90cd;
+            --success-green: #00b894;
+            --error-red: #e74c3c;
+            --warning-yellow: #ffc107;
+            --dark-accent: #1a365d;
+            
+            /* Theme transition */
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f8f9fa;
+            --text-secondary: #a0a0a0;
+            --border-color: #404040;
+            --sidebar-bg: #2d2d2d;
+            --card-bg: #353535;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Left Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            margin-bottom: 4px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 0;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--bg-secondary);
+            color: var(--primary-blue);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            stroke-width: 2;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            display: flex;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            max-width: calc(100% - 300px);
+        }
+
+        /* Course Header */
+        .course-header {
+            margin-bottom: 2rem;
+        }
+
+        .course-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .course-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Hero Banner */
+        .course-banner {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .banner-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .banner-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 75, 133, 0.1);
+            z-index: 1;
+        }
+
+        /* Course Description */
+        .course-description {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .description-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-accent);
+        }
+
+        .description-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Right Sidebar - Lessons */
+        .lessons-sidebar {
+            width: 300px;
+            background: var(--card-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 2rem;
+            position: fixed;
+            right: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .lessons-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .lessons-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-overview {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Module Accordion */
+        .module {
+            margin-bottom: 1rem;
+        }
+
+        .module-header {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .module-header:hover {
+            background: var(--border-color);
+        }
+
+        .module-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .module-chevron {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .module-chevron.expanded {
+            transform: rotate(180deg);
+        }
+
+        .lessons-list {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        .lesson-item {
+            padding: 12px 1rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+        }
+
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        .lesson-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .lesson-item.active {
+            background: rgba(77, 144, 205, 0.1);
+            color: var(--primary-blue);
+        }
+
+        .lesson-item.completed {
+            color: var(--success-green);
+        }
+
+        .lesson-status {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .lesson-status.completed {
+            background: var(--success-green);
+            border-color: var(--success-green);
+            color: white;
+        }
+
+        .lesson-status.active {
+            border-color: var(--primary-blue);
+            background: rgba(77, 144, 205, 0.2);
+        }
+
+        .lesson-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-green);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .content-area {
+                max-width: 100%;
+                padding: 1rem;
+            }
+
+            .lessons-sidebar {
+                display: none;
+            }
+
+            .course-title {
+                font-size: 2rem;
+            }
+
+            .course-banner {
+                height: 200px;
+            }
+
+            .banner-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .checkmark {
+            width: 12px;
+            height: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Dark mode specific adjustments */
+        [data-theme="dark"] .course-banner {
+            background: linear-gradient(135deg, #2d4a6b 0%, #1a365d 100%);
+        }
+
+        [data-theme="dark"] .course-description,
+        [data-theme="dark"] .lessons-sidebar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="app-container">
+        <!-- Left Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">LearnHub</div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9,22 9,12 15,12 15,22"/>
+                        </svg>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                        Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                        Learning Paths
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                        Leaderboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                        </svg>
+                        My Tests
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Bookmarks
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 3v5h5M3 21l6-6M21 3a9 9 0 1 1-6.219 2.56"/>
+                        </svg>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Lesson Library
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                        My Change Requests
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-area">
+                <!-- Course Header -->
+                <div class="course-header">
+                    <h1 class="course-title">Financial Analytics for Managers</h1>
+                    <p class="course-subtitle">Master the fundamentals of financial analysis and decision-making</p>
+                </div>
+
+                <!-- Hero Banner -->
+                <div class="course-banner">
+                    <div class="banner-overlay"></div>
+                    <div class="banner-content">
+                        <h2 class="banner-title">Transform Your Financial Expertise</h2>
+                        <p class="banner-description">Learn essential financial analysis techniques, budgeting strategies, and performance metrics that drive business success. This comprehensive course will equip you with the tools and knowledge needed to make informed financial decisions.</p>
+                    </div>
+                </div>
+
+                <!-- Course Description -->
+                <div class="course-description">
+                    <h3 class="description-title">Course Overview</h3>
+                    <p class="description-text">
+                        This course provides a comprehensive introduction to financial analytics for managers and professionals. You'll learn how to interpret financial statements, analyze business performance metrics, create effective budgets, and use financial data to drive strategic decisions. Through practical exercises and real-world case studies, you'll develop the skills needed to confidently navigate financial challenges in your organization.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar - Lessons -->
+        <aside class="lessons-sidebar">
+            <div class="lessons-header">
+                <h3 class="lessons-title">Course Content</h3>
+                <div class="progress-overview">
+                    <span>Progress: 3/12 lessons</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 1 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <span class="module-title">Module 1: Financial Fundamentals</span>
+                    <svg class="module-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+                <div class="lessons-list">
+                    <div class="lesson-item completed" onclick="selectLesson(this)">
+                        <div class="lesson-status completed">
+                            <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                        <span class="lesson-title">Introduction to Financial Analysis</span>
+                    </div>
+                    <div class="lesson-item completed" onclick="selectLesson(this)">
+                        <div class="lesson-status completed">
+                            <svg class="checkmark" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                        <span class="lesson-title">Understanding Financial Statements</span>
+                    </div>
+                    <div class="lesson-item active" onclick="selectLesson(this)">
+                        <div class="lesson-status active"></div>
+                        <span class="lesson-title">Cash Flow Analysis</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Ratio Analysis Fundamentals</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <span class="module-title">Module 2: Budget Planning</span>
+                    <svg class="module-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+                <div class="lessons-list hidden">
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Creating Annual Budgets</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Forecasting Techniques</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Variance Analysis</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Capital Budgeting</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="module">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <span class="module-title">Module 3: Performance Metrics</span>
+                    <svg class="module-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+                <div class="lessons-list hidden">
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">KPI Development</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">ROI Calculations</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Financial Dashboards</span>
+                    </div>
+                    <div class="lesson-item" onclick="selectLesson(this)">
+                        <div class="lesson-status"></div>
+                        <span class="lesson-title">Strategic Financial Planning</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            
+            // Store theme preference
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+
+        // Module Accordion Toggle
+        function toggleModule(moduleHeader) {
+            const module = moduleHeader.parentElement;
+            const lessonsList = module.querySelector('.lessons-list');
+            const chevron = moduleHeader.querySelector('.module-chevron');
+            
+            lessonsList.classList.toggle('hidden');
+            chevron.classList.toggle('expanded');
+        }
+
+        // Lesson Selection
+        function selectLesson(lessonItem) {
+            // Remove active class from all lessons
+            document.querySelectorAll('.lesson-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected lesson
+            if (!lessonItem.classList.contains('completed')) {
+                lessonItem.classList.add('active');
+            }
+            
+            // Here you would typically load the lesson content
+            // For demo purposes, we'll just highlight the selection
+            console.log('Selected lesson:', lessonItem.querySelector('.lesson-title').textContent);
+        }
+
+        // Mobile Navigation Toggle
+        function toggleMobileNav() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            
+            // Expand first module by default
+            const firstModule = document.querySelector('.module');
+            const firstModuleList = firstModule.querySelector('.lessons-list');
+            const firstChevron = firstModule.querySelector('.module-chevron');
+            
+            firstModuleList.classList.remove('hidden');
+            firstChevron.classList.add('expanded');
+        });
+
+        // Handle responsive behavior
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.querySelector('.sidebar').classList.remove('mobile-open');
+            }
+        });
+    </script>
+</body>
+</html>

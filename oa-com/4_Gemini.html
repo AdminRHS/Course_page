@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Academy - Course Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-open {
+            transform: translateX(0);
+        }
+        .sidebar-closed {
+            transform: translateX(-100%);
+        }
+        .dark .dark\:bg-gray-800 { background-color: #1f2937; }
+        .dark .dark\:bg-gray-900 { background-color: #111827; }
+        .dark .dark\:text-gray-200 { color: #e5e7eb; }
+        .dark .dark\:text-gray-400 { color: #9ca3af; }
+        .dark .dark\:border-gray-700 { border-color: #374151; }
+        .dark .dark\:hover\:bg-gray-700:hover { background-color: #374151; }
+        .dark .dark\:bg-opacity-50 { background-color: rgba(23, 23, 23, 0.5); }
+        .dark .dark\:bg-opacity-80 { background-color: rgba(31, 41, 55, 0.8); }
+        .dark .dark\:shadow-lg-dark { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15); }
+
+        .pill-active {
+            background-color: #2563eb;
+            color: white;
+        }
+        .dark .pill-active {
+            background-color: #3b82f6;
+        }
+        .lesson-card.active-lesson {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar sidebar-closed md:sidebar-open fixed md:relative z-20 w-64 bg-white dark:bg-gray-800 shadow-lg md:shadow-none flex flex-col h-full">
+            <div class="p-6 text-2xl font-bold text-gray-900 dark:text-white">Game Academy</div>
+            <nav class="flex-1 px-4 space-y-2">
+                <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="home" class="w-5 h-5 mr-3"></i> Home
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-white bg-blue-600 rounded-lg">
+                    <i data-lucide="graduation-cap" class="w-5 h-5 mr-3"></i> Courses
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="file-check" class="w-5 h-5 mr-3"></i> Pass
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="star" class="w-5 h-5 mr-3"></i> Rating
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="book-open" class="w-5 h-5 mr-3"></i> Blog
+                </a>
+                <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="compass" class="w-5 h-5 mr-3"></i> My Guide
+                </a>
+                 <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="bar-chart-2" class="w-5 h-5 mr-3"></i> Max Analytics
+                </a>
+                 <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="shield" class="w-5 h-5 mr-3"></i> Admin Panel
+                </a>
+                 <a href="#" class="flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i data-lucide="library" class="w-5 h-5 mr-3"></i> Lesson Library
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex items-center mb-4">
+                    <img class="w-10 h-10 rounded-full mr-3" src="https://placehold.co/100x100/E2E8F0/4A5568?text=AV" alt="User Avatar">
+                    <div>
+                        <p class="font-semibold text-gray-800 dark:text-white">John Doe</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                     <button id="theme-toggle" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                        <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+                        <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                        <span class="ml-2">Theme</span>
+                    </button>
+                    <a href="#" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                        <i data-lucide="log-out" class="w-5 h-5 mr-2"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="px-6 md:px-10 py-6">
+                <!-- Header -->
+                <header class="flex justify-between items-center mb-6">
+                    <div class="flex items-center">
+                        <button id="sidebar-toggle" class="md:hidden text-gray-600 dark:text-gray-400 mr-4">
+                            <i data-lucide="menu" class="w-6 h-6"></i>
+                        </button>
+                        <button class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
+                            <i data-lucide="arrow-left" class="w-5 h-5 mr-2"></i> Back
+                        </button>
+                    </div>
+                    <button class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm">
+                        <i data-lucide="edit" class="w-4 h-4 mr-2"></i> Edit
+                    </button>
+                </header>
+
+                <!-- Hero Section -->
+                <div class="relative rounded-2xl overflow-hidden min-h-[300px] md:min-h-[400px] flex items-center p-6 md:p-10 bg-cover bg-center" style="background-image: url('https://placehold.co/1200x400/000000/FFFFFF?text=Course+Hero');">
+                    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+                    <div class="relative w-full flex flex-col items-start gap-6">
+                        <div class="max-w-xl">
+                            <span class="inline-block bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">FOR BEGINNERS</span>
+                            <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight">Introduction to Game Design Principles</h1>
+                            <p class="text-gray-200 mt-2 text-base md:text-lg">Learn the fundamental concepts of game design, from storytelling to mechanics, and start creating your own engaging experiences.</p>
+                        </div>
+                        
+                        <!-- Course Info Card -->
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl p-6 shadow-lg dark:shadow-lg-dark w-full">
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-4">Course Information</h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-sm">
+                                <div class="flex items-center"><i data-lucide="clock" class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"></i><div><strong>10</strong> hours</div></div>
+                                <div class="flex items-center"><i data-lucide="book-marked" class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"></i><div><strong>24</strong> lessons</div></div>
+                                <div class="flex items-center"><i data-lucide="video" class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"></i><div><strong>8</strong> videos</div></div>
+                                <div class="flex items-center"><i data-lucide="presentation" class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"></i><div><strong>5</strong> decks</div></div>
+                                <div class="flex items-center"><i data-lucide="file-question" class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"></i><div><strong>3</strong> tests</div></div>
+                            </div>
+                            <div class="mt-5 pt-4 border-t border-gray-200 dark:border-gray-600">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="lucide lucide-star text-yellow-500 w-4 h-4 fill-current"></i>
+                                        <i class="lucide lucide-star text-yellow-500 w-4 h-4 fill-current"></i>
+                                        <i class="lucide lucide-star text-yellow-500 w-4 h-4 fill-current"></i>
+                                        <i class="lucide lucide-star text-yellow-500 w-4 h-4 fill-current"></i>
+                                        <i class="lucide lucide-star text-gray-300 dark:text-gray-500 w-4 h-4 fill-current"></i>
+                                    </div>
+                                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">4.1 (1,283 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="my-8">
+                    <div class="flex justify-between items-center mb-1">
+                         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Course Progress</span>
+                        <span id="progress-text" class="text-sm font-medium text-blue-600 dark:text-blue-400">40% Completed</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 40%"></div>
+                    </div>
+                </div>
+
+                <!-- 70/30 Content Split -->
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Left Section (70%) -->
+                    <div class="w-full lg:w-8/12">
+                        <!-- Module Filter -->
+                        <div class="mb-6">
+                            <div id="module-filter" class="flex flex-wrap gap-2">
+                                <button data-module="1" class="module-btn pill-active px-4 py-2 text-sm font-semibold rounded-full transition">Module 1</button>
+                                <button data-module="2" class="module-btn px-4 py-2 text-sm font-semibold rounded-full transition bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">Module 2</button>
+                                <button data-module="3" class="module-btn px-4 py-2 text-sm font-semibold rounded-full transition bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">Module 3</button>
+                            </div>
+                        </div>
+
+                        <!-- Lessons Grid -->
+                        <div id="lessons-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <!-- Lessons will be injected here by JS -->
+                        </div>
+
+                        <!-- Lesson Detail View -->
+                        <div id="lesson-detail-container" class="mt-12 hidden">
+                           <!-- Lesson details will be injected here by JS -->
+                        </div>
+                    </div>
+                    <!-- Right Section (30%) -->
+                    <aside class="w-full lg:w-4/12">
+                         <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Recommended Courses</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4">
+                                    <img src="https://placehold.co/100x80/3B82F6/FFFFFF?text=Next" class="w-24 h-16 object-cover rounded-lg" alt="Course thumbnail">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Advanced Prototyping</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Take your designs to the next level.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img src="https://placehold.co/100x80/10B981/FFFFFF?text=Art" class="w-24 h-16 object-cover rounded-lg" alt="Course thumbnail">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Pixel Art Fundamentals</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Create stunning retro game art.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <img src="https://placehold.co/100x80/F97316/FFFFFF?text=Story" class="w-24 h-16 object-cover rounded-lg" alt="Course thumbnail">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 dark:text-gray-200">Narrative Design for Games</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Craft compelling stories.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const lessonsData = {
+                1: [
+                    { id: 1, title: "What is Game Design?", type: "video", completed: true },
+                    { id: 2, title: "The Role of a Designer", type: "deck", completed: true },
+                    { id: 3, title: "Core Design Pillars", type: "video", completed: false },
+                    { id: 4, title: "Understanding Your Player", type: "deck", completed: false },
+                    { id: 5, title: "Introduction to Prototyping", type: "test", completed: false },
+                    { id: 6, title: "The Game Loop", type: "video", completed: false },
+                ],
+                2: [
+                    { id: 7, title: "Level Design Basics", type: "video", completed: false },
+                    { id: 8, title: "Character Archetypes", type: "deck", completed: false },
+                    { id: 9, title: "Balancing Mechanics", type: "test", completed: false },
+                ],
+                3: [
+                    { id: 10, title: "Monetization Models", type: "video", completed: false },
+                    { id: 11, title: "Game Feel and Polish", type: "deck", completed: false },
+                    { id: 12, title: "Final Project Kick-off", type: "deck", completed: false },
+                ]
+            };
+
+            const lessonsContainer = document.getElementById('lessons-container');
+            const lessonDetailContainer = document.getElementById('lesson-detail-container');
+            const moduleFilter = document.getElementById('module-filter');
+
+            const typeIcons = {
+                video: 'video',
+                deck: 'presentation',
+                test: 'file-question'
+            };
+
+            function renderLessons(moduleId) {
+                const lessons = lessonsData[moduleId] || [];
+                lessonsContainer.innerHTML = '';
+                lessons.forEach(lesson => {
+                    const icon = typeIcons[lesson.type] || 'book';
+                    const completedClass = lesson.completed ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-700';
+                    const checkIcon = lesson.completed ? `<div class="absolute top-2 right-2 bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center"><i data-lucide="check" class="w-3 h-3"></i></div>` : '';
+                    
+                    const lessonCard = `
+                        <div class="lesson-card group relative bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all ${completedClass}"
+                            data-lesson-id="${lesson.id}"
+                            data-module-id="${moduleId}"
+                            data-title="${lesson.title}" 
+                            data-description="In this introductory lesson, we'll explore the foundational concepts of what makes a game fun and engaging.">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="relative w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-3 overflow-hidden">
+                                    <i data-lucide="${icon}" class="w-10 h-10 text-gray-500 dark:text-gray-400 transition-transform duration-300 group-hover:scale-75"></i>
+                                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                         <i data-lucide="${icon}" class="w-8 h-8 text-white"></i>
+                                    </div>
+                                </div>
+                                <h4 class="font-semibold text-sm text-gray-800 dark:text-gray-200">${lesson.title}</h4>
+                            </div>
+                            ${checkIcon}
+                        </div>
+                    `;
+                    lessonsContainer.innerHTML += lessonCard;
+                });
+                lucide.createIcons();
+                addCardListeners();
+            }
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlEl = document.documentElement;
+            themeToggle.addEventListener('click', () => {
+                htmlEl.classList.toggle('dark');
+                htmlEl.classList.toggle('light');
+            });
+
+            // Mobile Sidebar Toggle
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            sidebarToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle('sidebar-closed');
+                sidebar.classList.toggle('sidebar-open');
+            });
+            
+            document.addEventListener('click', (e) => {
+                 if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target) && sidebar.classList.contains('sidebar-open')) {
+                    sidebar.classList.remove('sidebar-open');
+                    sidebar.classList.add('sidebar-closed');
+                }
+            });
+
+
+            // Module Filtering
+            moduleFilter.addEventListener('click', (e) => {
+                if (e.target.classList.contains('module-btn')) {
+                    document.querySelectorAll('.module-btn').forEach(btn => {
+                        btn.classList.remove('pill-active');
+                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'hover:bg-gray-300', 'dark:hover:bg-gray-600');
+
+                    });
+                    e.target.classList.add('pill-active');
+                    e.target.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'hover:bg-gray-300', 'dark:hover:bg-gray-600');
+
+                    const moduleId = e.target.dataset.module;
+                    renderLessons(moduleId);
+                    lessonDetailContainer.classList.add('hidden'); // Hide details when changing module
+                }
+            });
+
+            // RENDER LESSON DETAIL VIEW
+            function renderLessonDetail(card) {
+                const title = card.dataset.title;
+                const description = card.dataset.description;
+
+                lessonDetailContainer.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full p-6 md:p-10">
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                        <!-- Mascot Video -->
+                        <div class="flex-shrink-0">
+                            <div class="relative w-48 h-48 md:w-64 md:h-64 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center shadow-inner">
+                                <img src="https://storage.googleapis.com/gemini-prod/images/image_f088e0.jpg" alt="Meeky the Mascot" class="w-40 h-40 md:w-56 md:h-56 object-contain rounded-full">
+                                <button class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 hover:opacity-100 transition-opacity">
+                                    <i data-lucide="play" class="w-16 h-16 text-white"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Lesson Info -->
+                        <div class="text-center md:text-left">
+                            <div class="flex justify-center md:justify-start items-center gap-2 mb-3">
+                                <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full dark:bg-green-900 dark:text-green-200">BEGINNER</span>
+                                <span class="inline-block bg-purple-100 text-purple-800 text-xs font-semibold px-3 py-1 rounded-full dark:bg-purple-900 dark:text-purple-200">DESIGN</span>
+                            </div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">${title}</h2>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">${description}</p>
+                            <div class="flex justify-center md:justify-start gap-3">
+                                <button class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition flex items-center gap-2">
+                                    <i data-lucide="play-circle" class="w-5 h-5"></i> Start Lesson
+                                </button>
+                                <button class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold px-6 py-3 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition flex items-center gap-2">
+                                    <i data-lucide="plus" class="w-5 h-5"></i> Add to Playlist
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                        <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">Навчальні матеріали</h3>
+                        <div class="bg-gray-100 dark:bg-gray-900 rounded-lg min-h-[300px] flex items-center justify-center p-8">
+                            <p class="text-gray-500">Тут буде основний контент уроку (відео, текст, тощо).</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+                lucide.createIcons();
+                lessonDetailContainer.classList.remove('hidden');
+                lessonDetailContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+
+            function addCardListeners() {
+                document.querySelectorAll('.lesson-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        // Remove active state from all cards
+                        document.querySelectorAll('.lesson-card').forEach(c => c.classList.remove('active-lesson'));
+                        // Add active state to clicked card
+                        card.classList.add('active-lesson');
+                        renderLessonDetail(card);
+                    });
+                });
+            }
+            
+            // Initial Render
+            renderLessons('1');
+        });
+    </script>
+</body>
+</html>
+

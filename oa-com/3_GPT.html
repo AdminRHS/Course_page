@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Academy • Open Course</title>
+  <style>
+    /* ------------------------------------------------------------
+       Game Academy – single file HTML/CSS
+       Notes:
+       • 4pt spacing scale
+       • Rounded corners everywhere (var(--radius))
+       • Muted palette (no pure colors) with light/dark theme
+       • Fixed left sidebar, scrollable content area
+       ------------------------------------------------------------ */
+
+    :root {
+      /* Muted light theme */
+      --bg: #f6f6f3;              /* soft ivory */
+      --surface: #ffffff;         /* white with a gray/blue tint via overlay */
+      --surface-2: #ececea;       /* stone gray */
+      --text: #2e2f31;            /* off-black */
+      --muted: #7b7f86;           /* cool gray */
+      --line: #e1e1dd;            /* subtle hairline */
+      --accent: #9aa7c7;          /* dusty blue */
+      --accent-2: #a7a394;        /* muted olive */
+      --cta: #b7abd0;             /* dusty lavender */
+      --good: #7fb08c;            /* desaturated green */
+      --warn: #c9a26d;            /* tea gold */
+      --bad: #b3b3b3;             /* soft gray */
+      --shadow: 0 6px 18px rgba(28, 32, 45, 0.08);
+      --radius: 16px;
+
+      --sidebar-w: 280px;
+      --space-1: 4px;  --space-2: 8px;  --space-3: 12px;  --space-4: 16px;
+      --space-5: 20px; --space-6: 24px; --space-7: 28px; --space-8: 32px;
+    }
+
+    /* Dark theme toggled on <html data-theme="dark"> */
+    html[data-theme="dark"] {
+      --bg: #121316;              /* dark charcoal */
+      --surface: #1b1d20;         /* deep slate */
+      --surface-2: #23262a;       /* slightly lighter for cards */
+      --text: #e9eaed;            /* soft near-white */
+      --muted: #9aa1a9;
+      --line: #2a2d33;
+      --accent: #8190b2;          /* adjusted for dark */
+      --accent-2: #9a9687;
+      --cta: #a89cc1;
+      --good: #78a885;
+      --warn: #bb9a69;
+      --bad: #6b6f77;
+      --shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* Layout */
+    .app { display: flex; min-height: 100%; }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed; inset: 0 auto 0 0; width: var(--sidebar-w);
+      background: linear-gradient(180deg, rgba(19,22,27,0.08), rgba(19,22,27,0)) , var(--surface);
+      border-right: 1px solid var(--line);
+      padding: var(--space-6) var(--space-5);
+      display: flex; flex-direction: column; gap: var(--space-6);
+    }
+    .brand { display: flex; align-items: center; gap: var(--space-3); font-weight: 700; letter-spacing: .2px; }
+    .brand .logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--cta)); box-shadow: var(--shadow); }
+    .nav { display: grid; gap: 6px; }
+    .nav a {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: 10px 12px; border-radius: 12px; text-decoration: none; color: var(--text);
+      border: 1px solid transparent; background: transparent;
+    }
+    .nav a:hover { background: var(--surface-2); border-color: var(--line); }
+    .nav a.is-active { background: linear-gradient(180deg, rgba(154,167,199,.14), rgba(154,167,199,.12)); border-color: var(--line); }
+    .nav .ico { width: 18px; height: 18px; border-radius: 4px; background: var(--accent-2); opacity: .6; }
+
+    .spacer { flex: 1 1 auto; }
+
+    .user {
+      border-top: 1px solid var(--line); padding-top: var(--space-5);
+      display: grid; gap: var(--space-4);
+    }
+    .user-row { display: flex; align-items: center; gap: var(--space-3); }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #a3a7b0, #848b96); box-shadow: var(--shadow); }
+    .user .name { font-weight: 600; }
+    .toggles { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+    .switch { position: relative; width: 56px; height: 28px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; cursor: pointer; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); box-shadow: var(--shadow); transition: transform .25s ease; }
+    html[data-theme="dark"] .switch::after { transform: translateX(28px); }
+    .btn-logout {
+      width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(183,171,208,.12), rgba(183,171,208,.08)); color: var(--text);
+      cursor: pointer;
+    }
+
+    /* Main content shell */
+    .content { margin-left: var(--sidebar-w); width: calc(100% - var(--sidebar-w)); padding: var(--space-6) var(--space-7); }
+
+    /* Top bar with Back/Edit */
+    .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-6); }
+    .ghost-btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line);
+      background: var(--surface); text-decoration: none; color: var(--text); box-shadow: var(--shadow);
+    }
+
+    /* Hero */
+    .hero { position: relative; border-radius: var(--radius); overflow: hidden; background: #475163; height: 260px; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(.9) brightness(.85); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.35)); }
+    .hero .overlay { position: absolute; inset: 0; padding: var(--space-7); display: flex; flex-direction: column; justify-content: flex-end; color: #f4f5f6; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.14); backdrop-filter: blur(2px); font-size: 12px; }
+    .hero .brandline { font-weight: 700; font-size: 14px; letter-spacing: .2px; opacity: .95; }
+
+    /* Title + description */
+    .title { margin: var(--space-6) 0 var(--space-2); font-size: clamp(26px, 2.6vw, 36px); line-height: 1.15; }
+    .sub { color: var(--muted); max-width: 70ch; }
+
+    /* Info card */
+    .infocard { margin-top: var(--space-6); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .infocard .head { padding: var(--space-5) var(--space-6); font-weight: 700; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, rgba(154,167,199,.10), rgba(154,167,199,.06)); }
+    .infocard .rows { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-2); padding: var(--space-5) var(--space-6); }
+    .metric { display: grid; gap: 6px; }
+    .metric .k { font-weight: 600; }
+
+    .rating { display: flex; align-items: center; gap: 6px; justify-content: flex-end; grid-column: 5 / 6; }
+    .star { width: 18px; height: 18px; fill: url(#g); opacity: .9; }
+
+    .progress-wrap { padding: 0 var(--space-6) var(--space-6); }
+    .progress { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
+    .progress > span { display: block; height: 100%; width: 56%; background: linear-gradient(90deg, var(--accent), var(--cta)); border-radius: 999px; }
+
+    /* Two-column area */
+    .grid { display: grid; grid-template-columns: 7fr 3fr; gap: var(--space-6); margin-top: var(--space-7); align-items: start; }
+
+    /* Lessons (left column) */
+    .module { display: grid; gap: var(--space-4); margin-bottom: var(--space-7); }
+    .module h3 { margin: 0; font-size: 18px; letter-spacing: .2px; }
+
+    .lessons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--radius) - 4px); overflow: hidden; box-shadow: var(--shadow); display: grid; }
+    .card-media { position: relative; height: 142px; background: linear-gradient(135deg, #cfd3db, #e5e7ec); }
+    .badge { position: absolute; top: 10px; right: 10px; font-size: 12px; padding: 6px 9px; border-radius: 10px; background: rgba(0,0,0,.55); color: #fff; }
+    .card-body { padding: var(--space-4); display: grid; gap: 10px; }
+    .card-title { display: flex; gap: 8px; align-items: center; justify-content: space-between; font-weight: 600; }
+    .status { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bad); box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
+    .dot.good { background: var(--good); }
+    .dot.warn { background: linear-gradient(90deg, var(--warn) 50%, rgba(201,162,109,.35) 50%); }
+
+    /* Recommended (right column) */
+    .aside { position: sticky; top: var(--space-6); }
+    .aside h3 { margin-top: 0; }
+    .rec { display: grid; gap: var(--space-4); }
+    .rec-card { display: grid; grid-template-columns: 88px 1fr; gap: var(--space-3); padding: var(--space-3); background: var(--surface); border: 1px solid var(--line); border-radius: calc(var(--radius) - 6px); box-shadow: var(--shadow); }
+    .rec-thumb { height: 68px; border-radius: 10px; background: linear-gradient(135deg, #d3d7df, #e7e9ef); }
+    .rec-title { margin: 2px 0 4px; font-weight: 600; }
+    .rec-meta { color: var(--muted); font-size: 13px; }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .lessons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 960px) {
+      .content { padding: var(--space-6); }
+      .grid { grid-template-columns: 1fr; }
+      .aside { position: static; }
+    }
+
+    /* Mobile sidebar (simple toggle) */
+    .mobile-topbar { display: none; }
+    @media (max-width: 820px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar { transform: translateX(-100%); transition: transform .25s ease; }
+      .sidebar.is-open { transform: translateX(0); }
+      .content { margin-left: 0; width: 100%; }
+      .mobile-topbar { position: sticky; top: 0; z-index: 5; display: flex; gap: var(--space-4); align-items: center; padding-bottom: var(--space-4); background: linear-gradient(180deg, var(--bg), rgba(0,0,0,0)); }
+      .hamburger { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); display: grid; place-items: center; }
+      .hamburger span { width: 18px; height: 2px; background: var(--text); position: relative; }
+      .hamburger span::before, .hamburger span::after { content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: var(--text); }
+      .hamburger span::before { top: -6px; } .hamburger span::after { top: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Fixed Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="logo" aria-hidden="true"></div> Game Academy</div>
+      <nav class="nav" aria-label="Main Navigation">
+        <a class="is-active" href="#"><span class="ico"></span> Home</a>
+        <a href="#"><span class="ico"></span> Courses E-learning</a>
+        <a href="#"><span class="ico"></span> Pass</a>
+        <a href="#"><span class="ico"></span> Leadboard</a>
+        <a href="#"><span class="ico"></span> Blog</a>
+        <a href="#"><span class="ico"></span> My Text Book</a>
+        <a href="#"><span class="ico"></span> Max Analytics</a>
+        <a href="#"><span class="ico"></span> Admin Panel</a>
+        <a href="#"><span class="ico"></span> Lesson Library</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="user">
+        <div class="user-row">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <div class="name">Alex Carter</div>
+            <div class="muted" style="color:var(--muted); font-size:13px;">Learner</div>
+          </div>
+        </div>
+        <div class="toggles">
+          <div style="font-size:14px; color:var(--muted);">Theme</div>
+          <div class="switch" id="themeSwitch" role="switch" aria-checked="false" aria-label="Toggle dark theme"></div>
+        </div>
+        <button class="btn-logout" type="button">Exit</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Mobile header -->
+      <div class="mobile-topbar">
+        <button class="hamburger" id="menuBtn" aria-label="Open menu"><span></span></button>
+        <div class="brand"><div class="logo"></div> Game Academy</div>
+      </div>
+
+      <div class="toolbar">
+        <a class="ghost-btn" href="#">← Back</a>
+        <a class="ghost-btn" href="#">✎ Edit</a>
+      </div>
+
+      <!-- Hero header with dark overlay text -->
+      <section class="hero" aria-label="Course header image">
+        <img alt="Abstract game dev header" src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1600&auto=format&fit=crop" />
+        <div class="overlay">
+          <span class="pill"><strong class="brandline">Game Academy</strong> • For Beginners</span>
+        </div>
+      </section>
+
+      <!-- Title & description -->
+      <h1 class="title">Foundations of Game Programming</h1>
+      <p class="sub">Build a strong base in game development. Learn the core concepts of loops, state, sprites, physics, and input while writing clean code and shipping small, playable prototypes.</p>
+
+      <!-- Course Information card with progress -->
+      <section class="infocard" aria-labelledby="info-title">
+        <div class="head" id="info-title">Course Information</div>
+        <div class="rows">
+          <div class="metric"><div class="k">Time</div><div>20 minutes</div></div>
+          <div class="metric"><div class="k">Lessons</div><div>12 lessons</div></div>
+          <div class="metric"><div class="k">Videos</div><div>7 videos</div></div>
+          <div class="metric"><div class="k">Presentations</div><div>3 presentations</div></div>
+          <div class="metric"><div class="k">Tests</div><div>3 tests</div></div>
+          <div class="rating" aria-label="Course rating: 4.7 out of 5">
+            <svg width="0" height="0" aria-hidden="true"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--cta)"/></linearGradient></defs></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <svg class="star" viewBox="0 0 24 24" aria-hidden="true" style="opacity:.35"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress" aria-label="Progress"><span role="progressbar" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></span></div>
+        </div>
+      </section>
+
+      <!-- Two-column: lessons (70%) + recommendations (30%) -->
+      <section class="grid">
+        <!-- Lessons -->
+        <div>
+          <div class="module">
+            <h3>Module One · Core Concepts</h3>
+            <div class="lessons">
+              <!-- Lesson card -->
+              <article class="card">
+                <div class="card-media"><span class="badge">Presentation</span></div>
+                <div class="card-body">
+                  <div class="card-title">Intro to Game Loops</div>
+                  <div class="status"><span class="dot good"></span> Completed</div>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-media"><span class="badge">Video</span></div>
+                <div class="card-body">
+                  <div class="card-title">Sprites & Animation</div>
+                  <div class="status"><span class="dot warn"></span> In Progress</div>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-media"><span class="badge">Text</span></div>
+                <div class="card-body">
+                  <div class="card-title">State & Scenes</div>
+                  <div class="status"><span class="dot"></span> Not Started</div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="module">
+            <h3>Module Two · Physics & Input</h3>
+            <div class="lessons">
+              <article class="card">
+                <div class="card-media"><span class="badge">Code</span></div>
+                <div class="card-body">
+                  <div class="card-title">Basic Collisions</div>
+                  <div class="status"><span class="dot"></span> Not Started</div>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-media"><span class="badge">Video</span></div>
+                <div class="card-body">
+                  <div class="card-title">Gravity & Jumping</div>
+                  <div class="status"><span class="dot good"></span> Completed</div>
+                </div>
+              </article>
+              <article class="card">
+                <div class="card-media"><span class="badge">Test</span></div>
+                <div class="card-body">
+                  <div class="card-title">Checkpoint Quiz</div>
+                  <div class="status"><span class="dot warn"></span> In Progress</div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommended -->
+        <aside class="aside">
+          <h3>Recommended Courses</h3>
+          <div class="rec">
+            <div class="rec-card">
+              <div class="rec-thumb"></div>
+              <div>
+                <div class="rec-title">Level Design Basics</div>
+                <div class="rec-meta">Beginner • 8 lessons</div>
+              </div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-thumb" style="background: linear-gradient(135deg, #cfd6d6, #e6ecec);"></div>
+              <div>
+                <div class="rec-title">Shaders & Materials</div>
+                <div class="rec-meta">Intermediate • 12 lessons</div>
+              </div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-thumb" style="background: linear-gradient(135deg, #d8d3da, #eae6ee);"></div>
+              <div>
+                <div class="rec-title">Publishing Your Game</div>
+                <div class="rec-meta">All levels • 6 lessons</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Theme toggle
+    const switchEl = document.getElementById('themeSwitch');
+    const isDark = localStorage.getItem('ga-theme') === 'dark';
+    if (isDark) document.documentElement.setAttribute('data-theme','dark');
+    if (isDark) switchEl.setAttribute('aria-checked','true');
+    switchEl.addEventListener('click', () => {
+      const nowDark = document.documentElement.getAttribute('data-theme') !== 'dark';
+      document.documentElement.setAttribute('data-theme', nowDark ? 'dark' : 'light');
+      switchEl.setAttribute('aria-checked', nowDark ? 'true' : 'false');
+      localStorage.setItem('ga-theme', nowDark ? 'dark' : 'light');
+    });
+
+    // Mobile sidebar open/close
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    if (menuBtn) menuBtn.addEventListener('click', () => sidebar.classList.toggle('is-open'));
+  </script>
+</body>
+</html>

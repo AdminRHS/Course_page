@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a more modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #d1d5db; /* gray-300 */
+            border-radius: 20px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #4b5563; /* gray-600 */
+        }
+        /* Custom styles for fixed sidebars to prevent content overlap */
+        .main-content {
+            padding-left: 250px; /* Width of left sidebar */
+        }
+        .course-content-area {
+            padding-right: 320px; /* Width of right sidebar */
+        }
+        @media (max-width: 1024px) {
+            .main-content {
+                padding-left: 0;
+            }
+            .course-content-area {
+                padding-right: 0;
+            }
+        }
+    </style>
+    <script>
+        // Custom color palette based on research documents
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'base-bg-light': '#F3F5F9',
+                        'secondary-bg-light': '#FFFFFF',
+                        'primary-text-light': '#0D0D0D',
+                        'secondary-text-light': '#819FA7',
+                        'border-light': '#D9D9D9',
+
+                        'base-bg-dark': '#1a202c',
+                        'secondary-bg-dark': '#2d3748',
+                        'primary-text-dark': '#E2E8F0',
+                        'secondary-text-dark': '#A0AEC0',
+                        'border-dark': '#4A5568',
+
+                        'primary-blue': '#004b85',
+                        'secondary-blue': '#4d90cd',
+                        'success-green': '#00b894',
+                        'warning-yellow': '#ffc107',
+                        'error-red': '#E53E3E',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-base-bg-light dark:bg-base-bg-dark text-primary-text-light dark:text-primary-text-dark transition-colors duration-300">
+
+    <div class="flex h-screen">
+        <!-- Left Sidebar Navigation -->
+        <aside id="left-sidebar" class="fixed top-0 left-0 h-full w-[250px] bg-[#1a365d] text-white p-4 flex-col justify-between hidden lg:flex transition-transform duration-300 ease-in-out">
+            <div>
+                <div class="flex items-center mb-10">
+                    <svg class="h-10 w-10 mr-3 text-secondary-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-5.247-8.247a5.25 5.25 0 0110.5 0c0 2.9-2.35 5.25-5.25 5.25S6.75 12.35 6.75 9.5a5.25 5.25 0 015.25-3.247z" />
+                    </svg>
+                    <h1 class="text-xl font-bold">LearnCorp</h1>
+                </div>
+                <nav class="space-y-2">
+                    <!-- Navigation Items -->
+                    <a href="#" class="nav-item bg-primary-blue/50 rounded-lg"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg><span>Home</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.042.942l-1.085 3.32a1 1 0 00.942 1.343h1.002a1 1 0 00.942-1.343L6.05 9.051l2.022.919a1 1 0 00.956 0l2.022-.919.23.69a1 1 0 00.942 1.343h1.002a1 1 0 00.942-1.343l-1.085-3.32a.999.999 0 01.042-.942l1.854-1.127a1 1 0 000-1.84l-7-3zM10 6.561l-2.022-.918L10 3.723l2.022.92L10 6.561z"></path></svg><span>Courses</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg><span>Learning Paths</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path></svg><span>Leaderboard</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm5 2a1 1 0 00-1 1v1a1 1 0 001 1h2a1 1 0 001-1V5a1 1 0 00-1-1H9zM8 9a1 1 0 00-1 1v3a1 1 0 001 1h4a1 1 0 001-1v-3a1 1 0 00-1-1H8z" clip-rule="evenodd"></path></svg><span>My Tests</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path></svg><span>Bookmarks</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path></svg><span>Analytics</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg><span>Lesson Library</span></a>
+                    <a href="#" class="nav-item"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg><span>My Change Requests</span></a>
+                </nav>
+            </div>
+            <div class="mt-4">
+                <div class="flex items-center p-2 rounded-lg bg-primary-blue/30">
+                    <img src="https://placehold.co/40x40/FFFFFF/0D0D0D?text=JD" alt="User Avatar" class="rounded-full">
+                    <div class="ml-3">
+                        <p class="font-semibold text-sm">John Doe</p>
+                        <p class="text-xs text-gray-300">Sr. Developer</p>
+                    </div>
+                </div>
+            </div>
+            <style>.nav-item { display: flex; align-items: center; padding: 10px 12px; font-weight: 500; color: #cbd5e1; transition: all 0.2s ease; } .nav-item:hover { background-color: rgba(0, 75, 133, 0.5); border-radius: 8px; color: white; } .nav-item svg { margin-right: 12px; } </style>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto main-content transition-all duration-300">
+            <header class="sticky top-0 bg-base-bg-light/80 dark:bg-base-bg-dark/80 backdrop-blur-sm z-10 p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark">
+                 <button id="menu-toggle" class="lg:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+                <div class="flex-1"></div>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-blue">
+                    <svg id="theme-icon-light" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <svg id="theme-icon-dark" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+            </header>
+
+            <!-- Course Page View -->
+            <div id="course-view" class="flex relative">
+                <!-- Course Content (Left/Main Part) -->
+                <div class="flex-1 p-8 course-content-area">
+                    <div id="course-introduction">
+                        <h1 class="text-4xl font-bold text-primary-text-light dark:text-primary-text-dark">Advanced Corporate Strategy</h1>
+                        <p class="text-secondary-text-light dark:text-secondary-text-dark mt-2">Master the frameworks that drive modern business growth and innovation.</p>
+
+                        <div class="mt-6 aspect-video rounded-xl overflow-hidden relative group shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Corporate Strategy banner" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <svg class="h-16 w-16 text-white" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 p-6 bg-secondary-bg-light dark:bg-secondary-bg-dark rounded-lg shadow-sm">
+                            <h2 class="text-xl font-semibold mb-3">About this course</h2>
+                            <p class="text-secondary-text-light dark:text-secondary-text-dark leading-relaxed">
+                                This course provides a comprehensive overview of strategic management. It covers the analysis of industry structure, the development of competitive advantage, and the implementation of corporate strategies. You'll learn from case studies of leading global companies and apply these concepts to real-world business challenges.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Lesson Content -->
+                    <div id="lesson-content-area" class="hidden">
+                        <!-- Content will be injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Lessons Sidebar (Right) -->
+                <aside id="lessons-sidebar" class="fixed top-0 right-0 h-full w-[320px] bg-secondary-bg-light dark:bg-secondary-bg-dark border-l border-border-light dark:border-border-dark p-6 overflow-y-auto hidden lg:block pt-20">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Course Content</h2>
+                        <div class="w-28">
+                             <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                                <div id="course-progress-bar" class="bg-success-green h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <p id="course-progress-text" class="text-xs text-center mt-1 text-secondary-text-light dark:text-secondary-text-dark">0% Complete</p>
+                        </div>
+                    </div>
+                    
+                    <div id="modules-container" class="space-y-4">
+                        <!-- Modules will be injected by JS -->
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- DATA ---
+        const courseData = {
+            title: "Advanced Corporate Strategy",
+            description: "Master the frameworks that drive modern business growth and innovation.",
+            modules: [
+                {
+                    title: "Module 1: Foundations of Strategy",
+                    lessons: [
+                        { id: 1, title: "What is Corporate Strategy?", content: "<h1>Lesson 1: What is Corporate Strategy?</h1><p>Explore the core concepts and definitions that underpin all strategic thinking. We'll differentiate between corporate, business, and functional strategies.</p>", status: 'completed' },
+                        { id: 2, title: "Analyzing the Competitive Environment", content: "<h1>Lesson 2: Analyzing the Competitive Environment</h1><p>Learn to use Porter's Five Forces to understand industry structure and profitability.</p>", status: 'in-progress' },
+                        { id: 3, title: "The SWOT Analysis Framework", content: "<h1>Lesson 3: The SWOT Analysis Framework</h1><p>A deep dive into Strengths, Weaknesses, Opportunities, and Threats as a foundational strategic tool.</p>", status: 'not-started' },
+                    ]
+                },
+                {
+                    title: "Module 2: Competitive Advantage",
+                    lessons: [
+                        { id: 4, title: "Cost Leadership vs. Differentiation", content: "<h1>Lesson 4: Cost Leadership vs. Differentiation</h1><p>Understand the two primary sources of competitive advantage and how firms position themselves.</p>", status: 'not-started' },
+                        { id: 5, title: "The Value Chain Analysis", content: "<h1>Lesson 5: The Value Chain Analysis</h1><p>Break down a firm's activities to identify sources of value and competitive strength.</p>", status: 'not-started' },
+                    ]
+                },
+                {
+                    title: "Module 3: Corporate-Level Strategy",
+                    lessons: [
+                        { id: 6, title: "Vertical Integration & Diversification", content: "<h1>Lesson 6: Vertical Integration & Diversification</h1><p>Examine the strategic choices of what businesses a corporation should be in.</p>", status: 'not-started' },
+                        { id: 7, title: "Mergers, Acquisitions, and Alliances", content: "<h1>Lesson 7: Mergers, Acquisitions, and Alliances</h1><p>Learn the pros and cons of different growth strategies.</p>", status: 'not-started' },
+                        { id: 8, title: "Final Assessment", content: "<h1>Final Assessment</h1><p>Test your knowledge on all the topics covered in this course.</p>", status: 'not-started' },
+                    ]
+                }
+            ]
+        };
+
+        // --- ELEMENTS ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIconLight = document.getElementById('theme-icon-light');
+        const themeIconDark = document.getElementById('theme-icon-dark');
+        const modulesContainer = document.getElementById('modules-container');
+        const lessonContentArea = document.getElementById('lesson-content-area');
+        const courseIntroduction = document.getElementById('course-introduction');
+        const courseProgressBar = document.getElementById('course-progress-bar');
+        const courseProgressText = document.getElementById('course-progress-text');
+        const menuToggle = document.getElementById('menu-toggle');
+        const leftSidebar = document.getElementById('left-sidebar');
+
+        // --- THEME SWITCHER ---
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeIconLight.classList.add('hidden');
+                themeIconDark.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIconLight.classList.remove('hidden');
+                themeIconDark.classList.add('hidden');
+            }
+        };
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+        
+        // --- MOBILE MENU ---
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            leftSidebar.classList.toggle('hidden');
+            leftSidebar.classList.toggle('flex');
+            leftSidebar.classList.add('bg-opacity-95', 'backdrop-blur-md', 'z-50');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!leftSidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                 if (!leftSidebar.classList.contains('hidden')) {
+                     leftSidebar.classList.add('hidden');
+                 }
+            }
+        });
+
+        // --- DYNAMIC CONTENT RENDERING ---
+
+        // Function to create status icons based on research
+        const getStatusIcon = (status) => {
+            switch (status) {
+                case 'completed':
+                    return `<svg class="h-5 w-5 text-success-green" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>`;
+                case 'in-progress':
+                    return `<svg class="h-5 w-5 text-secondary-blue" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>`;
+                case 'not-started':
+                default:
+                    return `<svg class="h-5 w-5 text-secondary-text-light dark:text-secondary-text-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+            }
+        };
+
+        const renderModules = () => {
+            modulesContainer.innerHTML = ''; // Clear existing content
+            let totalLessons = 0;
+            let completedLessons = 0;
+
+            courseData.modules.forEach((module, moduleIndex) => {
+                const moduleElement = document.createElement('div');
+                moduleElement.className = 'border border-border-light dark:border-border-dark rounded-lg';
+
+                const lessonsHtml = module.lessons.map(lesson => {
+                    totalLessons++;
+                    if (lesson.status === 'completed') completedLessons++;
+                    return `
+                        <li class="lesson-item flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer rounded-md transition-colors" data-lesson-id="${lesson.id}">
+                            ${getStatusIcon(lesson.status)}
+                            <span class="ml-3 text-sm font-medium flex-1">${lesson.title}</span>
+                        </li>
+                    `;
+                }).join('');
+
+                moduleElement.innerHTML = `
+                    <button class="module-header w-full flex justify-between items-center p-4 text-left">
+                        <span class="font-semibold">${module.title}</span>
+                        <svg class="h-5 w-5 transform transition-transform chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <ul class="lesson-list hidden px-4 pb-2 space-y-1">
+                        ${lessonsHtml}
+                    </ul>
+                `;
+                modulesContainer.appendChild(moduleElement);
+
+                // Open first module by default
+                if (moduleIndex === 0) {
+                    moduleElement.querySelector('.lesson-list').classList.remove('hidden');
+                    moduleElement.querySelector('.chevron').classList.add('rotate-180');
+                }
+            });
+
+            // Update overall progress
+            const progressPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+            courseProgressBar.style.width = `${progressPercentage}%`;
+            courseProgressText.textContent = `${progressPercentage}% Complete`;
+        };
+        
+        const selectLesson = (lessonId) => {
+            let selectedLesson = null;
+            courseData.modules.forEach(module => {
+                const found = module.lessons.find(l => l.id == lessonId);
+                if (found) selectedLesson = found;
+            });
+
+            if(selectedLesson) {
+                courseIntroduction.classList.add('hidden');
+                lessonContentArea.classList.remove('hidden');
+                lessonContentArea.innerHTML = `<div class="prose dark:prose-invert max-w-none">${selectedLesson.content}</div>`;
+
+                // Update active state in lesson list
+                document.querySelectorAll('.lesson-item').forEach(item => {
+                    item.classList.remove('bg-secondary-blue/20', 'dark:bg-secondary-blue/30', 'font-bold');
+                    if (item.dataset.lessonId == lessonId) {
+                        item.classList.add('bg-secondary-blue/20', 'dark:bg-secondary-blue/30', 'font-bold');
+                    }
+                });
+            }
+        };
+
+        // --- EVENT LISTENERS ---
+        modulesContainer.addEventListener('click', (e) => {
+            const moduleHeader = e.target.closest('.module-header');
+            if (moduleHeader) {
+                const lessonList = moduleHeader.nextElementSibling;
+                const chevron = moduleHeader.querySelector('.chevron');
+                lessonList.classList.toggle('hidden');
+                chevron.classList.toggle('rotate-180');
+            }
+            
+            const lessonItem = e.target.closest('.lesson-item');
+            if (lessonItem) {
+                const lessonId = lessonItem.dataset.lessonId;
+                selectLesson(lessonId);
+            }
+        });
+
+        // --- INITIALIZATION ---
+        renderModules();
+    });
+</script>
+
+</body>
+</html>

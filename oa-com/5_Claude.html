@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Academy - Course Detail</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light Theme Variables */
+            --bg-primary: #fafbfc;
+            --bg-secondary: #ffffff;
+            --bg-sidebar: #f8f9fa;
+            --text-primary: #1a1d23;
+            --text-secondary: #6c757d;
+            --accent: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --border: #e2e8f0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --overlay: rgba(255, 255, 255, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a202c;
+            --bg-sidebar: #2d3748;
+            --text-primary: #f7fafc;
+            --text-secondary: #cbd5e0;
+            --border: #4a5568;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --overlay: rgba(26, 32, 44, 0.9);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            position: fixed;
+            height: 100vh;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 0;
+            z-index: 100;
+        }
+
+        .logo {
+            padding: 0 2rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            flex: 1;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            opacity: 0.8;
+        }
+
+        .theme-toggle {
+            margin: 2rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 500px;
+            background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 3rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 50%;
+            color: white;
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .course-info-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--overlay);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 3rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .info-item.clickable {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .info-item.clickable:hover {
+            color: var(--accent);
+        }
+
+        .info-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: flex;
+            gap: 2rem;
+            padding: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .main-content-area {
+            flex: 0 0 70%;
+        }
+
+        .sidebar-content {
+            flex: 0 0 30%;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Module Cards */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            aspect-ratio: 3/4;
+            position: relative;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .module-image {
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 1rem;
+            color: white;
+        }
+
+        .module-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .module-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .load-more-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            margin: 2rem auto;
+        }
+
+        .load-more-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Recommended Courses */
+        .recommended-courses {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .recommended-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .recommended-course {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .recommended-course:hover {
+            background: var(--bg-primary);
+            transform: translateX(4px);
+        }
+
+        .course-thumb {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .course-details {
+            flex: 1;
+        }
+
+        .course-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .course-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Module Details Section */
+        .module-details {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .module-info {
+            flex: 1;
+        }
+
+        .module-meta {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .view-toggles {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .view-toggle {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: var(--bg-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-toggle.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .lesson-card {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .lesson-card.completed {
+            border-color: var(--success);
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+        }
+
+        .lesson-thumb {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            position: relative;
+        }
+
+        .lesson-duration {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .lesson-content {
+            padding: 1rem;
+        }
+
+        .lesson-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* List View Styles */
+        .lessons-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .lesson-row {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .lesson-row:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .lesson-row.completed {
+            border-color: var(--success);
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+        }
+
+        .lesson-thumb-small {
+            width: 80px;
+            height: 60px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .lesson-row-content {
+            flex: 1;
+        }
+
+        .lesson-row-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .lesson-row-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-row-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .lesson-row-actions {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .lesson-duration-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .lesson-btn {
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .completed-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .start-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .start-btn:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .student-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .student-email {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-progress {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-started {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .content-grid {
+                flex-direction: column;
+                padding: 2rem 1rem;
+            }
+
+            .main-content-area,
+            .sidebar-content {
+                flex: none;
+            }
+
+            .hero {
+                padding: 0 1rem;
+                height: 400px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .course-info-bar {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 8px 24px var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 100;
+            min-width: 200px;
+        }
+
+        .tooltip:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        .tooltip-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">Game Academy</div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    Home
+                </a>
+                
+                <a href="#" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Courses
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                    </svg>
+                    Learning Paths
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                    </svg>
+                    Leaderboard
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 3a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z"/>
+                    </svg>
+                    My Tests
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/>
+                    </svg>
+                    Bookmarks
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Analytics
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.496 2.132a1 1 0 00-.992 0l-7 4A1 1 0 003 8v7a1 1 0 100 2h14a1 1 0 100-2V8a1 1 0 00.496-1.868l-7-4zM6 9a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+                    </svg>
+                    Lesson Library
+                </a>
+                
+                <a href="#" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"/>
+                    </svg>
+                    My Change Requests
+                </a>
+            </nav>
+            
+            <div class="theme-toggle" onclick="toggleTheme()">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" id="theme-icon">
+                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
+                </svg>
+                Theme
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="course-badge">Beginner</div>
+                    <h1 class="hero-title">Advanced Game Design Fundamentals</h1>
+                    <p class="hero-description">Master the core principles of game design, from concept to implementation. Learn industry-standard techniques used by professional game developers.</p>
+                </div>
+                
+                <div class="course-info-bar">
+                    <div class="info-item">
+                        <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 01.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6a1 1 0 10-2 0z"/>
+                        </svg>
+                        12h 30m
+                    </div>
+                    
+                    <div class="info-item">
+                        <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        15 lessons
+                    </div>
+                    
+                    <div class="info-item">
+                        <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                        </svg>
+                        8 videos
+                    </div>
+                    
+                    <div class="info-item">
+                        <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"/>
+                        </svg>
+                        5 presentations
+                    </div>
+                    
+                    <div class="info-item">
+                        <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        4.8/5
+                    </div>
+                    
+                    <div class="info-item clickable" onclick="openModal()">
+                        <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                        256 participants
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Main Content Area -->
+                <div class="main-content-area">
+                    <h2 class="section-title">Course Modules</h2>
+                    
+                    <div class="modules-grid">
+                        <div class="module-card" onclick="showModuleDetails(1)">
+                            <div class="module-image" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+                                <div class="module-overlay">
+                                    <div class="module-number">Module 1</div>
+                                    <div class="module-title">Game Design Principles</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-card" onclick="showModuleDetails(2)">
+                            <div class="module-image" style="background: linear-gradient(135deg, #059669, #0d9488);">
+                                <div class="module-overlay">
+                                    <div class="module-number">Module 2</div>
+                                    <div class="module-title">Player Psychology</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-card" onclick="showModuleDetails(3)">
+                            <div class="module-image" style="background: linear-gradient(135deg, #dc2626, #ea580c);">
+                                <div class="module-overlay">
+                                    <div class="module-number">Module 3</div>
+                                    <div class="module-title">Level Design Basics</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="module-card" onclick="showModuleDetails(4)">
+                            <div class="module-image" style="background: linear-gradient(135deg, #7c2d12, #a16207);">
+                                <div class="module-overlay">
+                                    <div class="module-number">Module 4</div>
+                                    <div class="module-title">Game Mechanics</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="load-more-btn" onclick="loadMoreModules()">Show More Modules</button>
+                    
+                    <!-- Module Details Section -->
+                    <div class="module-details" id="moduleDetails" style="display: none;">
+                        <div class="module-header">
+                            <div class="module-info">
+                                <h3 class="section-title" id="selectedModuleTitle">Module 1: Game Design Principles</h3>
+                                <p id="selectedModuleDesc">Learn the fundamental principles that make games engaging and memorable. Explore core concepts like game loops, player motivation, and balance.</p>
+                            </div>
+                            <div class="module-meta">
+                                <div>5 Lessons</div>
+                                <div>2h 45m total</div>
+                            </div>
+                        </div>
+                        
+                        <div class="view-toggles">
+                            <button class="view-toggle active" onclick="switchView('grid')">Grid View</button>
+                            <button class="view-toggle" onclick="switchView('list')">List View</button>
+                        </div>
+                        
+                        <div id="gridView" class="lessons-grid">
+                            <div class="lesson-card completed">
+                                <div class="lesson-thumb">
+                                    <div class="lesson-duration">15 min</div>
+                                </div>
+                                <div class="lesson-content">
+                                    <div class="lesson-title">Introduction to Game Design</div>
+                                </div>
+                            </div>
+                            
+                            <div class="lesson-card">
+                                <div class="lesson-thumb" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">
+                                    <div class="lesson-duration">22 min</div>
+                                </div>
+                                <div class="lesson-content">
+                                    <div class="lesson-title">Core Game Loops</div>
+                                </div>
+                            </div>
+                            
+                            <div class="lesson-card">
+                                <div class="lesson-thumb" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                    <div class="lesson-duration">18 min</div>
+                                </div>
+                                <div class="lesson-content">
+                                    <div class="lesson-title">Player Engagement</div>
+                                </div>
+                            </div>
+                            
+                            <div class="lesson-card">
+                                <div class="lesson-thumb" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                                    <div class="lesson-duration">25 min</div>
+                                </div>
+                                <div class="lesson-content">
+                                    <div class="lesson-title">Game Balance Theory</div>
+                                </div>
+                            </div>
+                            
+                            <div class="lesson-card">
+                                <div class="lesson-thumb" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                                    <div class="lesson-duration">30 min</div>
+                                </div>
+                                <div class="lesson-content">
+                                    <div class="lesson-title">Practical Exercise</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="listView" class="lessons-list" style="display: none;">
+                            <div style="background: var(--bg-primary); border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1rem; border: 1px solid var(--border);">
+                                <div style="width: 80px; height: 60px; background: linear-gradient(135deg, #06b6d4, #3b82f6); border-radius: 6px; flex-shrink: 0;"></div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary);">Introduction to Game Design</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Learn the basic concepts and terminology used in game design.</div>
+                                    <div style="display: flex; gap: 1rem; font-size: 0.75rem; color: var(--text-secondary);">
+                                        <span>📹 1 video</span>
+                                        <span>📄 2 presentations</span>
+                                        <span>✅ 1 test</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">15 min</div>
+                                    <button style="background: var(--success); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Completed</button>
+                                </div>
+                            </div>
+                            
+                            <div style="background: var(--bg-primary); border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1rem; border: 1px solid var(--border);">
+                                <div style="width: 80px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #a855f7); border-radius: 6px; flex-shrink: 0;"></div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary);">Core Game Loops</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Understanding how players interact with game systems repeatedly.</div>
+                                    <div style="display: flex; gap: 1rem; font-size: 0.75rem; color: var(--text-secondary);">
+                                        <span>📹 2 videos</span>
+                                        <span>📄 1 presentation</span>
+                                        <span>✅ 1 test</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">22 min</div>
+                                    <button style="background: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Start Lesson</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar Content -->
+                <div class="sidebar-content">
+                    <div class="recommended-courses">
+                        <h3 class="recommended-title">Recommended Courses</h3>
+                        
+                        <div class="recommended-course tooltip">
+                            <div class="course-thumb" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
+                            <div class="course-details">
+                                <div class="course-name">Unity Programming Essentials</div>
+                                <div class="course-desc">Master Unity scripting and C# programming fundamentals</div>
+                            </div>
+                            <div class="tooltip-content">
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span>Duration:</span>
+                                        <span>8h 30m</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Videos:</span>
+                                        <span>12</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Tests:</span>
+                                        <span>4</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Presentations:</span>
+                                        <span>6</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommended-course tooltip">
+                            <div class="course-thumb" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);"></div>
+                            <div class="course-details">
+                                <div class="course-name">3D Modeling for Games</div>
+                                <div class="course-desc">Create optimized 3D assets using industry-standard tools</div>
+                            </div>
+                            <div class="tooltip-content">
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span>Duration:</span>
+                                        <span>10h 15m</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Videos:</span>
+                                        <span>15</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Tests:</span>
+                                        <span>3</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Presentations:</span>
+                                        <span>8</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommended-course tooltip">
+                            <div class="course-thumb" style="background: linear-gradient(135deg, #10b981, #059669);"></div>
+                            <div class="course-details">
+                                <div class="course-name">UI/UX Design for Games</div>
+                                <div class="course-desc">Design intuitive and engaging user interfaces</div>
+                            </div>
+                            <div class="tooltip-content">
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span>Duration:</span>
+                                        <span>6h 45m</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Videos:</span>
+                                        <span>9</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Tests:</span>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Presentations:</span>
+                                        <span>5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recommended-course tooltip">
+                            <div class="course-thumb" style="background: linear-gradient(135deg, #dc2626, #ea580c);"></div>
+                            <div class="course-details">
+                                <div class="course-name">Game Marketing Basics</div>
+                                <div class="course-desc">Learn how to effectively market and promote your games</div>
+                            </div>
+                            <div class="tooltip-content">
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span>Duration:</span>
+                                        <span>4h 20m</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Videos:</span>
+                                        <span>6</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Tests:</span>
+                                        <span>2</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Presentations:</span>
+                                        <span>4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="participantsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Course Participants</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <div class="student-list">
+                <div class="student-item">
+                    <div class="student-avatar">JD</div>
+                    <div class="student-info">
+                        <div class="student-name">John Doe</div>
+                        <div class="student-email">john.doe@gameacademy.com</div>
+                    </div>
+                    <div class="status-badge status-completed">Completed</div>
+                </div>
+                
+                <div class="student-item">
+                    <div class="student-avatar">SM</div>
+                    <div class="student-info">
+                        <div class="student-name">Sarah Miller</div>
+                        <div class="student-email">sarah.miller@gameacademy.com</div>
+                    </div>
+                    <div class="status-badge status-progress">In Progress</div>
+                </div>
+                
+                <div class="student-item">
+                    <div class="student-avatar">MJ</div>
+                    <div class="student-info">
+                        <div class="student-name">Mike Johnson</div>
+                        <div class="student-email">mike.johnson@gameacademy.com</div>
+                    </div>
+                    <div class="status-badge status-started">Started</div>
+                </div>
+                
+                <div class="student-item">
+                    <div class="student-avatar">EB</div>
+                    <div class="student-info">
+                        <div class="student-name">Emily Brown</div>
+                        <div class="student-email">emily.brown@gameacademy.com</div>
+                    </div>
+                    <div class="status-badge status-completed">Completed</div>
+                </div>
+                
+                <div class="student-item">
+                    <div class="student-avatar">DW</div>
+                    <div class="student-info">
+                        <div class="student-name">David Wilson</div>
+                        <div class="student-email">david.wilson@gameacademy.com</div>
+                    </div>
+                    <div class="status-badge status-progress">In Progress</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            
+            const themeIcon = document.getElementById('theme-icon');
+            if (newTheme === 'dark') {
+                themeIcon.innerHTML = '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>';
+            } else {
+                themeIcon.innerHTML = '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>';
+            }
+        }
+
+        function openModal() {
+            document.getElementById('participantsModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('participantsModal').classList.remove('active');
+        }
+
+        function showModuleDetails(moduleNumber) {
+            const moduleDetails = document.getElementById('moduleDetails');
+            const moduleTitle = document.getElementById('selectedModuleTitle');
+            const moduleDesc = document.getElementById('selectedModuleDesc');
+            
+            const modules = {
+                1: {
+                    title: 'Module 1: Game Design Principles',
+                    desc: 'Learn the fundamental principles that make games engaging and memorable. Explore core concepts like game loops, player motivation, and balance.'
+                },
+                2: {
+                    title: 'Module 2: Player Psychology',
+                    desc: 'Understand how players think and behave. Learn to design experiences that keep players engaged and motivated.'
+                },
+                3: {
+                    title: 'Module 3: Level Design Basics',
+                    desc: 'Master the art of creating compelling game levels. Learn pacing, flow, and environmental storytelling techniques.'
+                },
+                4: {
+                    title: 'Module 4: Game Mechanics',
+                    desc: 'Deep dive into the systems that make games work. Understand mechanics, dynamics, and aesthetics frameworks.'
+                }
+            };
+            
+            moduleTitle.textContent = modules[moduleNumber].title;
+            moduleDesc.textContent = modules[moduleNumber].desc;
+            
+            moduleDetails.style.display = 'block';
+            moduleDetails.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchView(viewType) {
+            const gridView = document.getElementById('gridView');
+            const listView = document.getElementById('listView');
+            const toggles = document.querySelectorAll('.view-toggle');
+            
+            toggles.forEach(toggle => toggle.classList.remove('active'));
+            
+            if (viewType === 'grid') {
+                gridView.style.display = 'grid';
+                listView.style.display = 'none';
+                toggles[0].classList.add('active');
+            } else {
+                gridView.style.display = 'none';
+                listView.style.display = 'block';
+                toggles[1].classList.add('active');
+            }
+        }
+
+        function loadMoreModules() {
+            const modulesGrid = document.querySelector('.modules-grid');
+            const loadMoreBtn = document.querySelector('.load-more-btn');
+            
+            // Add more module cards
+            const additionalModules = `
+                <div class="module-card" onclick="showModuleDetails(5)">
+                    <div class="module-image" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                        <div class="module-overlay">
+                            <div class="module-number">Module 5</div>
+                            <div class="module-title">User Interface Design</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="module-card" onclick="showModuleDetails(6)">
+                    <div class="module-image" style="background: linear-gradient(135deg, #9333ea, #7c3aed);">
+                        <div class="module-overlay">
+                            <div class="module-number">Module 6</div>
+                            <div class="module-title">Sound Design</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modulesGrid.insertAdjacentHTML('beforeend', additionalModules);
+            loadMoreBtn.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('participantsModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

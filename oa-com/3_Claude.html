@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Academy - JavaScript Fundamentals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Muted Color Palette */
+            --primary-bg: #F5F5F0;
+            --secondary-bg: #DCDCDC;
+            --accent-muted: #8F8C7F;
+            --accent-cta: #C1B5D3;
+            --text-primary: #2C2C2C;
+            --text-secondary: #5A5A5A;
+            --sidebar-bg: #3A3B3F;
+            --sidebar-text: #E8E8E8;
+            --card-bg: #FAFAFA;
+            --border-color: #E0E0E0;
+            --success-color: #7B9A7B;
+            --warning-color: #C4A661;
+            --info-color: #7B8FA3;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 24px 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 0 24px;
+        }
+
+        .sidebar .logo h2 {
+            color: var(--accent-cta);
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0 16px;
+        }
+
+        .sidebar nav li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar nav a {
+            display: block;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            background-color: rgba(193, 181, 211, 0.2);
+            color: var(--accent-cta);
+        }
+
+        .sidebar .user-section {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .sidebar .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-cta);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar .user-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .theme-toggle, .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--sidebar-text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover, .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background-color: var(--card-bg);
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--accent-muted);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--accent-cta);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 300px;
+            background: linear-gradient(135deg, #7B8FA3 0%, #8F8C7F 100%);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        /* Course Content */
+        .course-content {
+            padding: 32px;
+        }
+
+        .course-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .course-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        /* Course Info Card */
+        .course-info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .course-info-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-cta);
+            display: block;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 16px;
+        }
+
+        .star {
+            color: #F4C542;
+            font-size: 18px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 32px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--secondary-bg);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cta), var(--info-color));
+            width: 65%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Main Layout */
+        .content-layout {
+            display: flex;
+            gap: 32px;
+        }
+
+        .lessons-area {
+            flex: 0 0 70%;
+        }
+
+        .recommendations-area {
+            flex: 0 0 30%;
+        }
+
+        /* Module Sections */
+        .module {
+            margin-bottom: 40px;
+        }
+
+        .module-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-cta);
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Lesson Cards */
+        .lesson-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-thumbnail {
+            position: relative;
+            height: 140px;
+            background: linear-gradient(135deg, var(--accent-muted), var(--info-color));
+        }
+
+        .lesson-type {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .lesson-info {
+            padding: 16px;
+        }
+
+        .lesson-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .lesson-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+        }
+
+        .status-completed { background-color: var(--success-color); }
+        .status-progress { background-color: var(--warning-color); }
+        .status-not-started { background-color: var(--text-secondary); }
+
+        /* Recommendations */
+        .recommendations {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .recommendations h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .recommendation-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .recommendation-item:hover {
+            background-color: var(--secondary-bg);
+        }
+
+        .recommendation-thumb {
+            width: 60px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-muted), var(--info-color));
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .recommendation-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .recommendation-level {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--secondary-bg);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hero-section {
+                height: auto;
+                min-height: 400px;
+                padding: 24px 16px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-info-grid {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .content-layout {
+                flex-direction: column;
+            }
+
+            .lessons-area,
+            .recommendations-area {
+                flex: none;
+            }
+
+            .course-content {
+                padding: 16px;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>Game Academy</h2>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Courses E-learning</a></li>
+                <li><a href="#">Pass</a></li>
+                <li><a href="#">Leaderboard</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">My Text Book</a></li>
+                <li><a href="#">Max Analytics</a></li>
+                <li><a href="#">Admin Panel</a></li>
+                <li><a href="#">Lesson Library</a></li>
+            </ul>
+        </nav>
+        
+        <div class="user-section">
+            <div class="user-info">
+                <div class="avatar">JD</div>
+                <div>
+                    <div>John Doe</div>
+                    <small style="color: #999;">Student</small>
+                </div>
+            </div>
+            <div class="user-controls">
+                <button class="theme-toggle">🌙 Dark</button>
+                <button class="logout-btn">Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <button class="nav-btn">← Back</button>
+            <button class="nav-btn">Edit</button>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-badge">Game Academy — Beginners</div>
+                <h2>Programming Fundamentals</h2>
+            </div>
+        </div>
+
+        <!-- Course Content -->
+        <div class="course-content">
+            <div class="course-header">
+                <h1>JavaScript Fundamentals for Game Development</h1>
+                <p class="course-description">
+                    Master the essential JavaScript concepts needed for game development. This comprehensive course covers variables, functions, objects, and game-specific programming patterns through hands-on projects and interactive exercises.
+                </p>
+            </div>
+
+            <!-- Course Info Card -->
+            <div class="course-info-card">
+                <h3>Course Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-number">20</span>
+                        <span class="info-label">Minutes</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-number">12</span>
+                        <span class="info-label">Lessons</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-number">8</span>
+                        <span class="info-label">Videos</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-number">3</span>
+                        <span class="info-label">Presentations</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-number">3</span>
+                        <span class="info-label">Tests</span>
+                    </div>
+                </div>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">Progress: 65% Complete</div>
+            </div>
+
+            <!-- Main Content Layout -->
+            <div class="content-layout">
+                <!-- Lessons Area (70%) -->
+                <div class="lessons-area">
+                    <!-- Module One -->
+                    <div class="module">
+                        <h2 class="module-title">Module One: Basics</h2>
+                        <div class="lessons-grid">
+                            <div class="lesson-card">
+                                <div class="lesson-thumbnail">
+                                    <div class="lesson-type">Video</div>
+                                </div>
+                                <div class="lesson-info">
+                                    <h4 class="lesson-title">Introduction to JavaScript</h4>
+                                    <div class="lesson-status">
+                                        <div class="status-icon status-completed">✓</div>
+                                        <span>Completed</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lesson-card">
+                                <div class="lesson-thumbnail">
+                                    <div class="lesson-type">Presentation</div>
+                                </div>
+                                <div class="lesson-info">
+                                    <h4 class="lesson-title">Variables and Data Types</h4>
+                                    <div class="lesson-status">
+                                        <div class="status-icon status-progress">◐</div>
+                                        <span>In Progress</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lesson-card">
+                                <div class="lesson-thumbnail">
+                                    <div class="lesson-type">Code</div>
+                                </div>
+                                <div class="lesson-info">
+                                    <h4 class="lesson-title">Functions and Scope</h4>
+                                    <div class="lesson-status">
+                                        <div class="status-icon status-not-started">○</div>
+                                        <span>Not Started</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module Two -->
+                    <div class="module">
+                        <h2 class="module-title">Module Two: Advanced Concepts</h2>
+                        <div class="lessons-grid">
+                            <div class="lesson-card">
+                                <div class="lesson-thumbnail">
+                                    <div class="lesson-type">Video</div>
+                                </div>
+                                <div class="lesson-info">
+                                    <h4 class="lesson-title">Object-Oriented Programming</h4>
+                                    <div class="lesson-status">
+                                        <div class="status-icon status-not-started">○</div>
+                                        <span>Not Started</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lesson-card">
+                                <div class="lesson-thumbnail">
+                                    <div class="lesson-type">Test</div>
+                                </div>
+                                <div class="lesson-info">
+                                    <h4 class="lesson-title">DOM Manipulation</h4>
+                                    <div class="lesson-status">
+                                        <div class="status-icon status-not-started">○</div>
+                                        <span>Not Started</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lesson-card">
+                                <div class="lesson-thumbnail">
+                                    <div class="lesson-type">Code</div>
+                                </div>
+                                <div class="lesson-info">
+                                    <h4 class="lesson-title">Event Handling</h4>
+                                    <div class="lesson-status">
+                                        <div class="status-icon status-not-started">○</div>
+                                        <span>Not Started</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations Area (30%) -->
+                <div class="recommendations-area">
+                    <div class="recommendations">
+                        <h3>Recommended Courses</h3>
+                        
+                        <div class="recommendation-item">
+                            <div class="recommendation-thumb"></div>
+                            <div class="recommendation-info">
+                                <h4>HTML & CSS Fundamentals</h4>
+                                <span class="recommendation-level">Beginner</span>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-item">
+                            <div class="recommendation-thumb"></div>
+                            <div class="recommendation-info">
+                                <h4>Game Physics with JavaScript</h4>
+                                <span class="recommendation-level">Intermediate</span>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-item">
+                            <div class="recommendation-thumb"></div>
+                            <div class="recommendation-info">
+                                <h4>Canvas API for Games</h4>
+                                <span class="recommendation-level">Advanced</span>
+                            </div>
+                        </div>
+
+                        <div class="recommendation-item">
+                            <div class="recommendation-thumb"></div>
+                            <div class="recommendation-info">
+                                <h4>React for Web Games</h4>
+                                <span class="recommendation-level">Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

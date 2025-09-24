@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Academy - Course Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles based on the design document */
+        :root {
+            /* Light Theme Colors */
+            --bg-primary-light: #fafbfc;
+            --bg-secondary-light: #ffffff;
+            --bg-sidebar-light: #f8f9fa;
+            --text-primary-light: #1a1d23;
+            --text-secondary-light: #6c757d;
+            --accent-light: #4f46e5;
+            --success-light: #10b981;
+            --warning-light: #f59e0b;
+
+            /* Dark Theme Colors */
+            --bg-primary-dark: #0f1419;
+            --bg-secondary-dark: #1a202c;
+            --bg-sidebar-dark: #2d3748;
+            --text-primary-dark: #f7fafc;
+            --text-secondary-dark: #cbd5e0;
+        }
+
+        /* Applying the color variables via Tailwind config */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'bg-primary': 'var(--bg-primary-light)',
+                        'bg-secondary': 'var(--bg-secondary-light)',
+                        'bg-sidebar': 'var(--bg-sidebar-light)',
+                        'text-primary': 'var(--text-primary-light)',
+                        'text-secondary': 'var(--text-secondary-light)',
+                        'accent': 'var(--accent-light)',
+                        'success': 'var(--success-light)',
+                        'warning': 'var(--warning-light)',
+                    },
+                    aspectRatio: {
+                        '3/4': '3 / 4',
+                    }
+                }
+            },
+            darkMode: 'class',
+        }
+
+        html.dark {
+            --bg-primary-light: var(--bg-primary-dark);
+            --bg-secondary-light: var(--bg-secondary-dark);
+            --bg-sidebar-light: var(--bg-sidebar-dark);
+            --text-primary-light: var(--text-primary-dark);
+            --text-secondary-light: var(--text-secondary-dark);
+        }
+
+        /* Custom scrollbar for a more premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+         html.dark ::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        /* Animation for modal */
+        #studentsModal.hidden {
+            display: none;
+        }
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.3s ease-in-out;
+        }
+        .modal-leave-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .has-tooltip:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-bg-primary text-text-primary font-sans transition-colors duration-300">
+
+    <div class="flex">
+        <!-- Sidebar Navigation -->
+        <aside class="w-[280px] bg-bg-sidebar h-screen fixed top-0 left-0 flex flex-col p-6 border-r border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                </div>
+                <h1 class="text-xl font-bold text-text-primary">Game Academy</h1>
+            </div>
+            
+            <nav class="flex-grow space-y-2">
+                 <a href="#" class="flex items-center gap-4 p-3 rounded-lg bg-accent/10 text-accent font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                    <span>Courses</span>
+                </a>
+                <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                    <span>Learning Paths</span>
+                </a>
+                <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 15h1.5a2.5 2.5 0 0 1 0 5H4"/><path d="M19.5 15H18a2.5 2.5 0 0 0 0 5h1.5"/><path d="M12 2v20"/><path d="M2 12h20"/></svg>
+                    <span>Leaderboard</span>
+                </a>
+                 <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V21c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V3h6v18c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5V3.6c0-.4-.2-.8-.5-1.1-.3-.3-.7-.5-1.1-.5z"/></svg>
+                    <span>My Tests</span>
+                </a>
+                <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                    <span>Bookmarks</span>
+                </a>
+                 <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span>Analytics</span>
+                </a>
+                 <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><path d="M14 2v6h6"/><path d="M2 15h10"/><path d="m5 12-3 3 3 3"/></svg>
+                    <span>Lesson Library</span>
+                </a>
+                <a href="#" class="flex items-center gap-4 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary hover:text-text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/><path d="M16 16a3 3 0 0 1-3-3 4 4 0 0 0-4 4 3 3 0 0 1-3-3 4 4 0 0 0-4 4"/></svg>
+                    <span>My Change Requests</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto">
+                 <div class="flex items-center justify-between p-2 bg-black/5 dark:bg-white/5 rounded-lg">
+                    <span class="text-sm font-medium text-text-secondary">Theme</span>
+                    <div class="flex items-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        <label for="theme-toggle" class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value="" id="theme-toggle" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-accent"></div>
+                        </label>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    </div>
+                 </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-[280px] w-[calc(100%-280px)] p-8">
+            <!-- Hero Section -->
+            <section class="h-[500px] rounded-2xl relative overflow-hidden flex flex-col justify-end bg-cover bg-center" style="background-image: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%), url('https://placehold.co/1600x500/0f1419/333?text=Game+Design')">
+                <div class="p-10 text-white z-10 w-1/2">
+                    <span class="inline-block bg-accent/80 text-white text-xs font-bold px-3 py-1 rounded-full mb-4">BEGINNER</span>
+                    <h1 class="text-5xl font-extrabold mb-3 leading-tight">Introduction to Game Design Principles</h1>
+                    <p class="text-white/80">Learn the fundamental concepts of game design, from core mechanics to player engagement strategies.</p>
+                </div>
+                
+                <div class="w-full bg-black/40 backdrop-blur-sm p-4 z-10">
+                    <div class="grid grid-cols-6 gap-4 text-white text-sm">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <div>
+                                <div class="font-medium">10h 30m</div>
+                                <div class="text-xs text-white/70">Duration</div>
+                            </div>
+                        </div>
+                         <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                            <div>
+                                <div class="font-medium">12 Lessons</div>
+                                <div class="text-xs text-white/70">Content</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>
+                            <div>
+                                <div class="font-medium">42 Videos</div>
+                                <div class="text-xs text-white/70">Media</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v13.3a.2.2 0 0 1-.3.2L12 14l-7.7 3.5a.2.2 0 0 1-.3-.2V4Z"/><path d="M12 4v10"/><path d="M12 14L4 17.3"/><path d="m20 17.3-8-3.3"/></svg>
+                            <div>
+                                <div class="font-medium">8 Presentations</div>
+                                <div class="text-xs text-white/70">Resources</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <div>
+                                <div class="font-medium">4.8/5</div>
+                                <div class="text-xs text-white/70">Rating</div>
+                            </div>
+                        </div>
+                        <button id="open-modal-btn" class="flex items-center gap-2 cursor-pointer hover:bg-white/10 p-2 -m-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <div>
+                                <div class="font-medium">256 Students</div>
+                                <div class="text-xs text-white/70">Enrolled</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Grid Layout -->
+            <section class="mt-8 flex gap-8">
+                <!-- Main Content Area (70%) -->
+                <div class="w-[70%]">
+                    <h2 class="text-3xl font-bold mb-6 text-text-primary">Course Modules</h2>
+                    
+                    <div id="modules-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Module Cards will be injected here by JS -->
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button id="show-more-btn" class="text-accent font-semibold hover:underline">Show More</button>
+                    </div>
+                    
+                    <!-- Module Details Section -->
+                    <div id="module-details" class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-text-primary">Module 1: The Core of Fun</h3>
+                                <p class="text-text-secondary mt-1">Understanding what makes a game engaging and memorable.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="grid-view-btn" class="p-2 rounded-md bg-accent/10 text-accent">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                                </button>
+                                <button id="list-view-btn" class="p-2 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-text-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Lessons Grid View -->
+                        <div id="lessons-grid-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Lesson cards will be injected by JS -->
+                        </div>
+
+                        <!-- Lessons List View -->
+                        <div id="lessons-list-view" class="hidden space-y-3">
+                           <!-- Lesson list items will be injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Courses Sidebar (30%) -->
+                <aside class="w-[30%]">
+                    <h3 class="text-xl font-bold mb-6 text-text-primary">Recommended Courses</h3>
+                    <div class="space-y-4">
+                        <!-- Recommended Course Card 1 -->
+                        <div class="bg-bg-secondary p-4 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 flex gap-4 has-tooltip relative">
+                            <img src="https://placehold.co/100x100/4f46e5/white?text=Art" alt="Course thumbnail" class="w-20 h-20 rounded-lg object-cover">
+                            <div>
+                                <h4 class="font-semibold text-text-primary">Character Art Fundamentals</h4>
+                                <p class="text-sm text-text-secondary mt-1">Learn to design compelling characters.</p>
+                            </div>
+                            <div class="tooltip absolute top-full left-0 mt-2 w-full bg-bg-secondary p-3 rounded-lg shadow-xl z-10 border border-gray-200 dark:border-gray-700">
+                                <div class="text-xs text-text-secondary grid grid-cols-2 gap-2">
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg> 15h total</span>
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/></svg> 60 videos</span>
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v13.3a.2.2 0 0 1-.3.2L12 14l-7.7 3.5a.2.2 0 0 1-.3-.2V4Z"/></svg> 12 PDFs</span>
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V21"/></svg> 5 tests</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Recommended Course Card 2 -->
+                         <div class="bg-bg-secondary p-4 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 flex gap-4 has-tooltip relative">
+                            <img src="https://placehold.co/100x100/10b981/white?text=Code" alt="Course thumbnail" class="w-20 h-20 rounded-lg object-cover">
+                            <div>
+                                <h4 class="font-semibold text-text-primary">Advanced C++ for Games</h4>
+                                <p class="text-sm text-text-secondary mt-1">Optimize your game's performance.</p>
+                            </div>
+                             <div class="tooltip absolute top-full left-0 mt-2 w-full bg-bg-secondary p-3 rounded-lg shadow-xl z-10 border border-gray-200 dark:border-gray-700">
+                                <div class="text-xs text-text-secondary grid grid-cols-2 gap-2">
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg> 25h total</span>
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/></svg> 80 videos</span>
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v13.3a.2.2 0 0 1-.3.2L12 14l-7.7 3.5a.2.2 0 0 1-.3-.2V4Z"/></svg> 20 PDFs</span>
+                                    <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V21"/></svg> 10 tests</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </main>
+    </div>
+
+    <!-- Students Modal -->
+    <div id="studentsModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
+        <div id="modal-content" class="bg-bg-secondary w-full max-w-2xl rounded-2xl shadow-xl p-8 transform transition-all">
+             <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-text-primary">Enrolled Students (256)</h2>
+                <button id="close-modal-btn" class="text-text-secondary hover:text-text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="max-h-[60vh] overflow-y-auto pr-2">
+                <ul class="space-y-3">
+                    <!-- Student List Item -->
+                    <li class="flex items-center justify-between p-3 rounded-lg bg-black/5 dark:bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <img src="https://i.pravatar.cc/40?u=1" alt="Avatar" class="w-10 h-10 rounded-full">
+                            <span class="font-medium text-text-primary">Alice Johnson</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <span>Completed</span>
+                        </div>
+                    </li>
+                     <li class="flex items-center justify-between p-3 rounded-lg bg-black/5 dark:bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <img src="https://i.pravatar.cc/40?u=2" alt="Avatar" class="w-10 h-10 rounded-full">
+                            <span class="font-medium text-text-primary">Bob Williams</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-warning">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin" style="animation-duration: 3s;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                            <span>In Progress</span>
+                        </div>
+                    </li>
+                     <li class="flex items-center justify-between p-3 rounded-lg bg-black/5 dark:bg-white/5">
+                        <div class="flex items-center gap-3">
+                            <img src="https://i.pravatar.cc/40?u=3" alt="Avatar" class="w-10 h-10 rounded-full">
+                            <span class="font-medium text-text-primary">Charlie Brown</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm font-medium text-blue-500">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            <span>Started</span>
+                        </div>
+                    </li>
+                    <!-- More students... -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- THEME TOGGLE ---
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('change', () => {
+                document.documentElement.classList.toggle('dark', themeToggle.checked);
+            });
+
+            // --- MODAL LOGIC ---
+            const modal = document.getElementById('studentsModal');
+            const modalContent = document.getElementById('modal-content');
+            const openModalBtn = document.getElementById('open-modal-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                setTimeout(() => modalContent.classList.add('modal-enter-active'), 10);
+                modalContent.classList.add('modal-enter');
+            };
+
+            const closeModal = () => {
+                modalContent.classList.add('modal-leave-active');
+                modalContent.classList.remove('modal-enter-active');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modalContent.classList.remove('modal-leave-active');
+                }, 300);
+            };
+
+            openModalBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // --- DATA ---
+            const modulesData = [
+                { id: 1, title: 'The Core of Fun', lessons: 5 },
+                { id: 2, title: 'Game Mechanics', lessons: 8 },
+                { id: 3, title: 'Level Design', lessons: 6 },
+                { id: 4, title: 'Narrative Design', lessons: 4 },
+                { id: 5, title: 'Art & Sound', lessons: 7 },
+                { id: 6, title: 'Prototyping', lessons: 5 },
+                { id: 7, title: 'Playtesting', lessons: 3 },
+                { id: 8, title: 'Monetization', lessons: 4 },
+            ];
+            
+            const lessonsData = [
+                { id: 1, title: 'Core Loops', duration: '15 min', completed: true, content: ['video', 'test'] },
+                { id: 2, title: 'Player Motivation', duration: '25 min', completed: true, content: ['video', 'presentation'] },
+                { id: 3, title: 'Aesthetics of Play', duration: '20 min', completed: false, content: ['video'] },
+                { id: 4, title: 'Game Atoms', duration: '30 min', completed: false, content: ['video', 'test'] },
+                { id: 5, title: 'Balancing Systems', duration: '45 min', completed: false, content: ['presentation'] },
+            ];
+
+            // --- DYNAMIC CONTENT RENDERING ---
+            const modulesGrid = document.getElementById('modules-grid');
+            const showMoreBtn = document.getElementById('show-more-btn');
+            
+            let visibleModules = 4;
+
+            const renderModules = () => {
+                modulesGrid.innerHTML = '';
+                modulesData.slice(0, visibleModules).forEach((module, index) => {
+                    const moduleCard = `
+                        <a href="#module-details" class="group block aspect-3/4 rounded-2xl overflow-hidden relative cursor-pointer transform hover:-translate-y-1 transition-transform duration-300 shadow-lg hover:shadow-2xl">
+                            <img src="https://placehold.co/300x400/0f1419/555?text=Module+${module.id}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-5 text-white">
+                                <span class="text-2xl font-bold">Module ${index + 1}</span>
+                                <h4 class="font-semibold mt-1">${module.title}</h4>
+                            </div>
+                        </a>`;
+                    modulesGrid.insertAdjacentHTML('beforeend', moduleCard);
+                });
+                
+                if (visibleModules >= modulesData.length) {
+                    showMoreBtn.style.display = 'none';
+                } else {
+                    showMoreBtn.style.display = 'inline-block';
+                }
+            };
+            
+            showMoreBtn.addEventListener('click', () => {
+                visibleModules = modulesData.length;
+                renderModules();
+            });
+
+            // LESSONS
+            const lessonsGridView = document.getElementById('lessons-grid-view');
+            const lessonsListView = document.getElementById('lessons-list-view');
+            const gridViewBtn = document.getElementById('grid-view-btn');
+            const listViewBtn = document.getElementById('list-view-btn');
+            
+            const renderLessons = () => {
+                lessonsGridView.innerHTML = '';
+                lessonsListView.innerHTML = '';
+                
+                const contentIcons = {
+                    video: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/></svg>',
+                    presentation: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v13.3a.2.2 0 0 1-.3.2L12 14l-7.7 3.5a.2.2 0 0 1-.3-.2V4Z"/></svg>',
+                    test: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V21"/></svg>'
+                };
+
+                lessonsData.forEach(lesson => {
+                    const completionClass = lesson.completed ? 'border-success' : 'border-transparent';
+                    const iconHtml = lesson.content.map(type => contentIcons[type]).join('');
+
+                    // Grid Card
+                    const lessonGridCard = `
+                        <div class="group relative aspect-3/4 rounded-xl overflow-hidden shadow-md has-tooltip ${completionClass} border-2">
+                             <img src="https://placehold.co/300x400/1a202c/777?text=L${lesson.id}" class="w-full h-full object-cover"/>
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                             <div class="absolute bottom-0 left-0 p-4 text-white">
+                                <h4 class="font-semibold">${lesson.title}</h4>
+                             </div>
+                             <span class="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full">${lesson.duration}</span>
+                             <div class="tooltip absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/70 p-2 rounded-lg flex gap-2 text-white">
+                                ${iconHtml}
+                             </div>
+                        </div>`;
+                    lessonsGridView.insertAdjacentHTML('beforeend', lessonGridCard);
+                    
+                    // List Item
+                    const lessonListItem = `
+                        <div class="flex items-center gap-4 p-3 rounded-lg bg-bg-secondary shadow-sm">
+                            <img src="https://placehold.co/80x80/1a202c/777?text=L${lesson.id}" class="w-20 h-20 rounded-md object-cover"/>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                     <div>
+                                        <h4 class="font-semibold text-text-primary">${lesson.title}</h4>
+                                        <p class="text-sm text-text-secondary mt-1">A brief description of the lesson goes here.</p>
+                                    </div>
+                                    <span class="text-sm text-text-secondary whitespace-nowrap">${lesson.duration}</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-2">
+                                     <div class="flex items-center gap-2 text-text-secondary">${iconHtml}</div>
+                                     <button class="text-sm font-semibold bg-accent text-white px-4 py-1.5 rounded-md hover:bg-accent/90 transition-colors">Start Lesson</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    lessonsListView.insertAdjacentHTML('beforeend', lessonListItem);
+                });
+            };
+
+            gridViewBtn.addEventListener('click', () => {
+                lessonsGridView.classList.remove('hidden');
+                lessonsListView.classList.add('hidden');
+                gridViewBtn.classList.add('bg-accent/10', 'text-accent');
+                gridViewBtn.classList.remove('hover:bg-black/5', 'dark:hover:bg-white/5', 'text-text-secondary');
+                listViewBtn.classList.add('hover:bg-black/5', 'dark:hover:bg-white/5', 'text-text-secondary');
+                listViewBtn.classList.remove('bg-accent/10', 'text-accent');
+            });
+            
+            listViewBtn.addEventListener('click', () => {
+                lessonsListView.classList.remove('hidden');
+                lessonsGridView.classList.add('hidden');
+                listViewBtn.classList.add('bg-accent/10', 'text-accent');
+                listViewBtn.classList.remove('hover:bg-black/5', 'dark:hover:bg-white/5', 'text-text-secondary');
+                gridViewBtn.classList.add('hover:bg-black/5', 'dark:hover:bg-white/5', 'text-text-secondary');
+                gridViewBtn.classList.remove('bg-accent/10', 'text-accent');
+            });
+
+
+            // Initial render
+            renderModules();
+            renderLessons();
+        });
+    </script>
+</body>
+</html>

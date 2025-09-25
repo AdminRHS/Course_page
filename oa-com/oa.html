@@ -102,8 +102,20 @@
         <main class="ml-64 flex-1 bg-[#f7fafc] dark:bg-[#1a202c] p-6 lg:p-8">
             <div class="max-w-7xl mx-auto">
                 
-                <div class="mb-6 text-sm text-[#718096] dark:text-[#cbd5e0]">
-                    <span>Course</span> / <span class="font-semibold text-[#2d3748] dark:text-[#f7fafc]">Dropbox Fundamentals</span>
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-sm text-[#718096] dark:text-[#cbd5e0]">
+                        <span>Course</span> / <span class="font-semibold text-[#2d3748] dark:text-[#f7fafc]">Dropbox Fundamentals</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button style="background-color: rgb(99 179 237)" class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-lg hover:brightness-90 transition">
+                            <i data-lucide="pencil" class="w-4 h-4"></i>
+                            Edit
+                        </button>
+                        <button style="background-color: rgba(192, 34, 57, 1)" class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white rounded-lg hover:brightness-90 transition">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            Delete
+                        </button>
+                    </div>
                 </div>
 
                 <header class="hero-bg rounded-xl text-white p-8 md:p-12 mb-8 shadow-lg">
@@ -124,7 +136,7 @@
                         <a href="#lessons-section" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors ml-2"><i data-lucide="book-marked" class="w-4 h-4 mr-2"></i> 9 Lessons</a>
                         <button id="open-video-modal" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors ml-2"><i data-lucide="video" class="w-4 h-4 mr-2"></i> 12 Videos</button>
                         <button id="open-presentation-modal" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors ml-2"><i data-lucide="presentation" class="w-4 h-4 mr-2"></i> 8 Presentations</button>
-                        <a href="#test-item" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors ml-2"><i data-lucide="file-check-2" class="w-4 h-4 mr-2"></i> 1 Test</a>
+                        <a href="#lessons-section" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors ml-2"><i data-lucide="file-check" class="w-4 h-4 mr-2"></i> 5 Tests</a>
                         <button id="open-ratings-modal" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors ml-2"><i data-lucide="star" class="w-4 h-4 mr-2 text-yellow-400 fill-current"></i> 4.9</button>
                         <div class="flex-grow"></div>
                         <a href="#reviews" class="flex items-center p-2 rounded-lg hover:bg-white/20 transition-colors"><i data-lucide="message-square" class="w-4 h-4 mr-2"></i> Reviews</a>
@@ -136,26 +148,26 @@
                     </div>
                 </header>
 
-<div class="p-6 rounded-xl mb-8 bg-[#ffffff] dark:bg-[#1f2937] dark:border-[#424242] border border-[#e0e0e0]">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-lg font-semibold">Course Progress</h2>
-    <p class="text-sm text-[#718096] dark:text-[#cbd5e0]">3 of 10 lessons completed</p>
-  </div>
-  
-  <div class="flex items-center gap-4">
-    <div class="w-full bg-[#eeeeee] dark:bg-[#1a202c] rounded-full h-2.5 inset-shadow">
-      <div id="progress-bar" class="bg-gradient-to-r from-[#63b3ed] to-[#4299e1] h-2.5 rounded-full" style="width: 0%"></div>
-    </div>
-    <span id="progress-percent" class="font-bold text-lg text-[#3182ce] dark:text-[#63b3ed]">0%</span>
-  </div>
-</div>
+                <div class="p-6 rounded-xl mb-8 bg-[#ffffff] dark:bg-[#1f2937] dark:border-[#424242] border border-[#e0e0e0]">
+                  <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold">Course Progress</h2>
+                    <p class="text-sm text-[#718096] dark:text-[#cbd5e0]">3 of 10 lessons completed</p>
+                  </div>
+                  
+                  <div class="flex items-center gap-4">
+                    <div class="w-full bg-[#eeeeee] dark:bg-[#1a202c] rounded-full h-2.5 inset-shadow">
+                      <div id="progress-bar" class="bg-gradient-to-r from-[#63b3ed] to-[#4299e1] h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <span id="progress-percent" class="font-bold text-lg text-[#3182ce] dark:text-[#63b3ed]">0%</span>
+                  </div>
+                </div>
 
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2 space-y-8">
                         
-                        <div id="main-hero-video-container" class="rounded-xl shadow-sm text-center relative overflow-hidden h-[350px] flex items-center justify-center group border border-[#eeeeee] dark:border-[#424242]">
-                            <video id="main-hero-video" loop muted playsinline poster="thumb.png" src="video.mp4" class="absolute inset-0 w-full object-cover group-hover:scale-105 transition-transform duration-300"></video>
+                        <div id="main-hero-video-container" class="rounded-xl shadow-sm text-center relative overflow-hidden aspect-video flex items-center justify-center group border border-[#eeeeee] dark:border-[#424242]">
+                            <video id="main-hero-video" loop muted playsinline poster="thumb.png" src="video.mp4" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"></video>
                             <div class="absolute inset-0 bg-black/50"></div>
                             <button id="main-hero-play-button" class="relative bg-white/20 text-white backdrop-blur-sm p-4 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-110">
                                 <i data-lucide="play" class="w-10 h-10 ml-1 fill-current"></i>
@@ -172,9 +184,10 @@
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                                <a href="#lessons-section" id="module-1-card">
-                                    <div class="rounded-xl shadow-sm border-2 border-transparent hover:border-[#4299e1] dark:hover:border-[#63b3ed] transition-all cursor-pointer aspect-[9/16] relative overflow-hidden group">
+                                <a href="#lessons-section" id="module-1-card" class="group">
+                                    <div class="rounded-xl shadow-sm border-2 border-transparent group-hover:border-[#4299e1] dark:group-hover:border-[#63b3ed] transition-all cursor-pointer aspect-[9/16] relative overflow-hidden">
                                         <video id="module-1-video" src="vid_1.mp4" loop muted playsinline class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"></video>
+                                        <div class="absolute inset-0 bg-black/50 transition-opacity duration-300 group-hover:opacity-0"></div>
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                                         <div class="absolute bottom-0 left-0 p-4 text-white">
                                             <h3 class="font-bold text-lg">Module 1</h3>
@@ -182,8 +195,8 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#lessons-section" id="module-2-card">
-                                    <div class="rounded-xl shadow-sm border-2 border-[#4299e1] dark:border-[#63b3ed] ring-2 ring-[#4299e1]/30 dark:ring-[#63b3ed]/30 cursor-pointer aspect-[9/16] relative overflow-hidden group">
+                                <a href="#lessons-section" id="module-2-card" class="group">
+                                    <div class="rounded-xl shadow-sm border-2 border-[#4299e1] dark:border-[#63b3ed] ring-2 ring-[#4299e1]/30 dark:ring-[#63b3ed]/30 cursor-pointer aspect-[9/16] relative overflow-hidden">
                                          <video id="module-2-video" src="vid_2.mp4" loop muted playsinline class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"></video>
                                          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                                          <div class="absolute bottom-0 left-0 p-4 text-white">
@@ -192,13 +205,11 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#" id="module-3-card" class="locked-module cursor-not-allowed">
-                                    <div class="rounded-xl shadow-sm border-2 border-transparent transition-all aspect-[9/16] relative overflow-hidden group">
-                                         <video id="module-3-video" src="vid_3.mp4" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+                                <a href="#lessons-section" id="module-3-card" class="group">
+                                    <div class="rounded-xl shadow-sm border-2 border-transparent group-hover:border-[#4299e1] dark:group-hover:border-[#63b3ed] transition-all cursor-pointer aspect-[9/16] relative overflow-hidden">
+                                         <video id="module-3-video" src="vid_3.mp4" loop muted playsinline class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"></video>
+                                         <div class="absolute inset-0 bg-black/50 transition-opacity duration-300 group-hover:opacity-0"></div>
                                          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                                         <div class="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center">
-                                             <i data-lucide="lock" class="w-10 h-10 text-white"></i>
-                                         </div>
                                          <div class="absolute bottom-0 left-0 p-4 text-white">
                                             <h3 class="font-bold text-lg">Module 3</h3>
                                             <p class="text-sm">Everyday Dropbox Skills</p>
@@ -271,18 +282,119 @@
                             </div>
                             
                             <div id="lessons-list" class="space-y-4">
+                                <div class="p-4 rounded-xl shadow-sm flex items-center gap-6 border border-green-500/30 bg-green-500/10 dark:bg-green-500/20 transition-all duration-300 hover:shadow-xl">
+                                    <div class="relative w-[180px] h-[180px] flex-shrink-0">
+                                        <img src="../oa-com/photo_1.png" alt="Lesson thumbnail" class="rounded-lg w-full h-full object-cover">
+                                        <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">18 min</div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h4 class="font-semibold text-[#2d3748] dark:text-[#f7fafc]">Installing Dropbox</h4>
+                                        <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2">Follow this comprehensive, easy-to-use, step-by-step guide to effortlessly and securely download and install the powerful Dropbox application on your computer.</p>
+                                        <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0]">
+                                            <span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> 2 videos</span>
+                                            <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> 1 slides</span>
+                                            <span><i data-lucide="file-question" class="inline w-3 h-3 mr-1"></i> 1 tests</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">100%</button>
                                 </div>
+                                
+                                <div class="p-4 rounded-xl shadow-sm flex items-center gap-6 border border-red-500/30 bg-red-500/10 dark:bg-red-500/20 transition-all duration-300 hover:shadow-xl">
+                                    <div class="relative w-[180px] h-[180px] flex-shrink-0">
+                                        <img src="../oa-com/photo_2.png" alt="Lesson thumbnail" class="rounded-lg w-full h-full object-cover">
+                                        <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">20 min</div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <h4 class="font-semibold">First Steps After Installation</h4>
+                                            <div class="w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold cursor-pointer flex-shrink-0" title="Test Failed">i</div>
+                                        </div>
+                                        <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2">To complete the initial Dropbox setup, you must securely configure your account and effortlessly link all your devices wherever you are for seamless and rapid access to all your files.</p>
+                                        <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0]">
+                                            <span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> 1 videos</span>
+                                            <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> 2 slides</span>
+                                            <span><i data-lucide="file-question" class="inline w-3 h-3 mr-1"></i> 1 tests</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">Test</button>
+                                </div>
+
+                                <div class="p-4 rounded-xl shadow-sm flex items-center gap-6 border border-gray-200 bg-white dark:bg-[#1f2937] dark:border-[#424242] transition-all duration-300 hover:shadow-xl">
+                                    <div class="relative w-[180px] h-[180px] flex-shrink-0">
+                                        <img src="../oa-com/photo_3.png" alt="Lesson thumbnail" class="rounded-lg w-full h-full object-cover">
+                                        <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">25 min</div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h4 class="font-semibold">Your First Sync: Adding Files</h4>
+                                        <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2">Learn how to effortlessly add, sync, and securely verify your first files and folders to quickly understand the complete core functionality of your new Dropbox cloud storage system.</p>
+                                        <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0]">
+                                            <span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> 2 videos</span>
+                                            <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> 1 slides</span>
+                                            <span><i data-lucide="file-question" class="inline w-3 h-3 mr-1"></i> 2 tests</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">Test</button>
+                                </div>
+
+                                <div class="p-4 rounded-xl shadow-sm flex items-center gap-6 border border-gray-200 bg-white dark:bg-[#1f2937] dark:border-[#424242] transition-all duration-300 hover:shadow-xl">
+                                    <div class="relative w-[180px] h-[180px] flex-shrink-0">
+                                        <img src="../oa-com/photo_4.png" alt="Lesson thumbnail" class="rounded-lg w-full h-full object-cover">
+                                        <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">15 min</div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h4 class="font-semibold">Understanding the Interface</h4>
+                                        <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2">A deep dive into the Dropbox user interface, exploring every menu and option to make you a power user.</p>
+                                        <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0]">
+                                            <span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> 3 videos</span>
+                                            <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> 1 slides</span>
+                                            <span><i data-lucide="file-question" class="inline w-3 h-3 mr-1"></i> 1 tests</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-[#4299e1] text-white font-semibold py-2 px-5 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4]">Start</button>
+                                </div>
+                                
+                                <div class="p-4 rounded-xl shadow-sm flex items-center gap-6 opacity-60 border border-gray-200 bg-gray-50 dark:bg-[#1f2937] dark:border-[#424242] transition-all duration-300">
+                                    <div class="relative w-[180px] h-[180px] flex-shrink-0">
+                                        <img src="../oa-com/photo_1.png" alt="Lesson thumbnail" class="rounded-lg w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
+                                            <i data-lucide="lock" class="w-8 h-8 text-white"></i>
+                                        </div>
+                                        <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">30 min</div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h4 class="font-semibold">Advanced Sharing Options</h4>
+                                        <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2">Master the art of sharing files and folders with advanced permissions and security settings.</p>
+                                        <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0]">
+                                            <span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> 4 videos</span>
+                                            <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> 2 slides</span>
+                                            <span><i data-lucide="file-question" class="inline w-3 h-3 mr-1"></i> 2 tests</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-[#e0e0e0] text-[#9e9e9e] dark:bg-[#2d3748] dark:text-[#718096] font-semibold py-2 px-5 rounded-lg cursor-not-allowed">Start</button>
+                                </div>
+                            </div>
                             
-                            <div id="lessons-grid" class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                </div>
+                            <div id="lessons-grid" class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                         </div>
 
                         <div id="reviews" class="pt-8">
                             <h2 class="text-2xl font-bold mb-6">Course Reviews</h2>
                             <div class="p-6 rounded-xl shadow-sm mb-6 border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#1f2937] dark:border-[#424242]">
-                                <h3 class="font-semibold mb-4">Add review</h3>
                                 <div class="space-y-4">
-                                    <input type="text" id="review-title-input" placeholder="Review title..." class="w-full p-3 border border-[#e0e0e0] dark:border-[#424242] rounded-lg focus:ring-2 focus:ring-[#4299e1]/50 dark:focus:ring-[#63b3ed]/50 focus:border-transparent transition bg-transparent">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Rate this course</h4>
+                                        <div class="flex justify-start items-center gap-1 text-[#bdbdbd] dark:text-[#616161] rating-stars-container-main">
+                                            <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star-main"></i>
+                                            <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star-main"></i>
+                                            <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star-main"></i>
+                                            <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star-main"></i>
+                                            <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star-main"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                         <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">Add review</h4>
+                                        <input type="text" id="review-title-input" placeholder="Review title..." class="w-full p-3 border border-[#e0e0e0] dark:border-[#424242] rounded-lg focus:ring-2 focus:ring-[#4299e1]/50 dark:focus:ring-[#63b3ed]/50 focus:border-transparent transition bg-transparent">
+                                    </div>
                                     <textarea id="review-text-input" placeholder="Write your review..." rows="4" class="w-full p-3 border border-[#e0e0e0] dark:border-[#424242] rounded-lg focus:ring-2 focus:ring-[#4299e1]/50 dark:focus:ring-[#63b3ed]/50 focus:border-transparent transition bg-transparent"></textarea>
                                     <div class="text-right">
                                         <button id="publish-review-btn" class="bg-[#4299e1] text-[#ffffff] font-semibold py-2 px-6 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4]">Publish</button>
@@ -309,11 +421,18 @@
                                             <h4 class="font-bold my-2">Small typo in lesson 2</h4>
                                             <p class="text-[#718096] dark:text-[#cbd5e0] text-sm">In the second lesson at 3:45, there's a small typo in the subtitle. It says 'instalation' instead of 'installation'. Just wanted to point it out!</p>
                                             <div class="flex items-center gap-4 mt-3">
+                                                <button class="flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#4299e1] dark:hover:text-[#63b3ed]">
+                                                    <i data-lucide="thumbs-up" class="w-4 h-4"></i> 13
+                                                </button>
                                                 <button class="flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#d32f2f]">
-                                                    <i data-lucide="heart" class="w-4 h-4 text-[#d32f2f] fill-current"></i> 13
+                                                    <i data-lucide="thumbs-down" class="w-4 h-4"></i> 2
                                                 </button>
                                                 <button class="reply-btn flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#4299e1] dark:hover:text-[#63b3ed]">
                                                     <i data-lucide="message-square" class="w-4 h-4"></i> Reply
+                                                </button>
+                                                <button class="toggle-replies-btn flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#4299e1] dark:hover:text-[#63b3ed]">
+                                                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                                    <span class="btn-reply-text">Show 4 more replies</span>
                                                 </button>
                                             </div>
                                             <div class="reply-form hidden mt-4">
@@ -323,18 +442,55 @@
                                                     <button class="bg-[#4299e1] text-[#ffffff] font-semibold py-2 px-5 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4] text-sm">Post Reply</button>
                                                 </div>
                                             </div>
-                                            <div class="mt-4 bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
-                                                <div class="w-8 h-8 rounded-lg bg-[#0288d1]/20 flex items-center justify-center font-bold text-[#01579b] dark:text-[#64b5f6] text-sm flex-shrink-0">CT</div>
-                                                <div class="flex-grow">
-                                                    <div>
-                                                        <span class="font-semibold text-sm">Course Team</span>
-                                                        <span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">1 hour ago</span>
+                                            <div class="replies-container mt-4 space-y-4">
+                                                <div class="reply-item initially-hidden hidden bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                    <div class="w-8 h-8 rounded-lg bg-pink-500/20 flex items-center justify-center font-bold text-pink-700 dark:text-pink-400 text-sm flex-shrink-0">DB</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">David Brown</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">2 days ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Thanks for the heads-up.</p>
                                                     </div>
-                                                    <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Thanks for catching that! We'll fix it in the next update.</p>
-                                                    <div class="flex items-center gap-4 mt-3">
-                                                        <button class="flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#4299e1] dark:hover:text-[#63b3ed]">
-                                                            <i data-lucide="thumbs-up" class="w-4 h-4"></i> 2
-                                                        </button>
+                                                </div>
+                                                <div class="reply-item initially-hidden hidden bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                     <div class="w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center font-bold text-indigo-700 dark:text-indigo-400 text-sm flex-shrink-0">LW</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">Laura Wilson</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">1 day ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">I noticed that too!</p>
+                                                    </div>
+                                                </div>
+                                                <div class="reply-item initially-hidden hidden bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                    <div class="w-8 h-8 rounded-lg bg-teal-500/20 flex items-center justify-center font-bold text-teal-700 dark:text-teal-400 text-sm flex-shrink-0">MS</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">Mike Smith</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">1 day ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Good catch.</p>
+                                                    </div>
+                                                </div>
+                                                 <div class="reply-item initially-hidden hidden bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                    <div class="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center font-bold text-orange-700 dark:text-orange-400 text-sm flex-shrink-0">AM</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">Anna Miller</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">20 hours ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Appreciate you pointing this out.</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="reply-item bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center font-bold text-purple-700 dark:text-purple-400 text-sm flex-shrink-0">SC</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">Sarah Chen</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">6 hours ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Oh, nice catch, I totally missed that when going through the lesson. Thanks for pointing it out!</p>
+                                                    </div>
+                                                </div>
+                                                <div class="reply-item bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                    <div class="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center font-bold text-red-700 dark:text-red-400 text-sm flex-shrink-0">MJ</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">Mike Johnson</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">4 hours ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Submitting a change request now.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="reply-item bg-[#fafafa] dark:bg-[#2d3748] p-4 rounded-lg flex items-start gap-3">
+                                                    <div class="w-8 h-8 rounded-lg bg-[#0288d1]/20 flex items-center justify-center font-bold text-[#01579b] dark:text-[#64b5f6] text-sm flex-shrink-0">CT</div>
+                                                    <div class="flex-grow">
+                                                        <div><span class="font-semibold text-sm">Course Team</span><span class="text-xs text-[#718096] dark:text-[#cbd5e0] ml-2">1 hour ago</span></div>
+                                                        <p class="text-[#718096] dark:text-[#cbd5e0] text-sm mt-1">Thanks for catching that! We'll fix it in the next update.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -360,11 +516,18 @@
                                             <h4 class="font-bold my-2">Great explanation of sync folders</h4>
                                             <p class="text-[#718096] dark:text-[#cbd5e0] text-sm">The explanation in module 2 about how sync folders work was really clear. Finally understand the difference between online-only and local files!</p>
                                             <div class="flex items-center gap-4 mt-3">
-                                                <button class="flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#d32f2f]">
-                                                    <i data-lucide="heart" class="w-4 h-4"></i> 5
+                                                <button class="flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#4299e1] dark:hover:text-[#63b3ed]">
+                                                    <i data-lucide="thumbs-up" class="w-4 h-4"></i> 5
+                                                </button>
+                                                 <button class="flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#d32f2f]">
+                                                    <i data-lucide="thumbs-down" class="w-4 h-4"></i> 0
                                                 </button>
                                                 <button class="reply-btn flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] hover:text-[#4299e1] dark:hover:text-[#63b3ed]">
                                                     <i data-lucide="message-square" class="w-4 h-4"></i> Reply
+                                                </button>
+                                                <button class="toggle-replies-btn flex items-center gap-1 text-sm text-[#718096] dark:text-[#cbd5e0] opacity-50 cursor-default">
+                                                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                                    <span class="btn-reply-text">0 Comments</span>
                                                 </button>
                                             </div>
                                             <div class="reply-form hidden mt-4">
@@ -374,6 +537,8 @@
                                                     <button class="bg-[#4299e1] text-[#ffffff] font-semibold py-2 px-5 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4] text-sm">Post Reply</button>
                                                 </div>
                                             </div>
+                                            <div class="replies-container hidden">
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -385,8 +550,8 @@
                         <div class="p-6 rounded-xl shadow-sm border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#1f2937] dark:border-[#424242]">
                             <h3 class="text-xl font-bold mb-4">Next Courses</h3>
                             <div class="space-y-6">
-                                <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300 cursor-pointer">
-                                    <img src="../oa-com/video - Copy.png" alt="Recommended course" class="w-full h-32 object-cover">
+                                <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300">
+                                    <img src="../oa-com/video_copy.png" alt="Recommended course" class="w-full aspect-video object-cover">
                                     <div class="p-4">
                                         <div class="flex justify-between items-center mb-1">
                                             <h4 class="font-semibold">Google Drive Essentials</h4>
@@ -400,8 +565,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300 cursor-pointer">
-                                    <img src="../oa-com/video - Copy.png" alt="Recommended course" class="w-full h-32 object-cover">
+                                <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300">
+                                    <img src="../oa-com/video_copy.png" alt="Recommended course" class="w-full aspect-video object-cover">
                                     <div class="p-4">
                                         <div class="flex justify-between items-center mb-1">
                                             <h4 class="font-semibold">OneDrive for Business</h4>
@@ -421,8 +586,8 @@
                         <div class="p-6 rounded-xl shadow-sm border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#1f2937] dark:border-[#424242]">
                             <h3 class="text-xl font-bold mb-4">Similar Courses</h3>
                             <div class="space-y-6">
-                               <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300 cursor-pointer">
-                                    <img src="../oa-com/video - Copy.png" alt="Similar course" class="w-full h-32 object-cover">
+                               <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300">
+                                    <img src="../oa-com/video_copy.png" alt="Similar course" class="w-full aspect-video object-cover">
                                     <div class="p-4">
                                         <div class="flex justify-between items-center mb-1">
                                             <h4 class="font-semibold">Box Cloud Storage Basics</h4>
@@ -436,8 +601,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300 cursor-pointer">
-                                    <img src="../oa-com/video - Copy.png" alt="Similar course" class="w-full h-32 object-cover">
+                                <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300">
+                                    <img src="../oa-com/video_copy" alt="Similar course" class="w-full aspect-video object-cover">
                                     <div class="p-4">
                                         <div class="flex justify-between items-center mb-1">
                                             <h4 class="font-semibold">iCloud Fundamentals</h4>
@@ -531,12 +696,29 @@
                 <div class="flex justify-center items-center gap-1 text-[#bdbdbd] dark:text-[#616161] mb-4 rating-stars-container">
                     <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i>
                 </div>
+                <div class="space-y-3">
+                    <input type="text" placeholder="Review title..." class="w-full p-3 border border-[#e0e0e0] dark:border-[#424242] rounded-lg focus:ring-2 focus:ring-[#4299e1]/50 dark:focus:ring-[#63b3ed]/50 focus:border-transparent transition bg-transparent text-sm">
+                    <textarea placeholder="Write your review..." rows="3" class="w-full p-3 border border-[#e0e0e0] dark:border-[#424242] rounded-lg focus:ring-2 focus:ring-[#4299e1]/50 dark:focus:ring-[#63b3ed]/50 focus:border-transparent transition bg-transparent text-sm"></textarea>
+                </div>
                 <button id="submit-rating-btn" class="w-full bg-[#4299e1] text-[#ffffff] font-semibold py-2 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4] mt-4">Submit Rating</button>
             </div>
             <div class="space-y-3 max-h-60 overflow-y-auto pr-2">
                 <div class="flex items-center justify-between p-2 rounded-lg"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-[#4299e1]/20 flex items-center justify-center font-bold text-[#3182ce] dark:text-[#63b3ed]" style="border-radius: 12px;">JD</div><p class="font-semibold">John Doe</p></div><div class="flex items-center gap-2"><div class="flex items-center text-yellow-400"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="text-sm font-bold w-8 text-right">5.0</span></div></div>
                 <div class="flex items-center justify-between p-2 rounded-lg"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-[#d32f2f]/20 flex items-center justify-center font-bold text-[#c62828] dark:text-[#e57373]" style="border-radius: 12px;">SM</div><p class="font-semibold">Sarah Miller</p></div><div class="flex items-center gap-2"><div class="flex items-center text-yellow-400"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 text-gray-300 dark:text-gray-600"></i></div><span class="text-sm font-bold w-8 text-right">4.0</span></div></div>
                 <div class="flex items-center justify-between p-2 rounded-lg"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-[#A855F7]/20 flex items-center justify-center font-bold text-[#9333EA] dark:text-[#a855f7]" style="border-radius: 12px;">MJ</div><p class="font-semibold">Mike Johnson</p></div><div class="flex items-center gap-2"><div class="flex items-center text-yellow-400"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="text-sm font-bold w-8 text-right">5.0</span></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="rating-only-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+        <div id="rating-only-modal-content" class="bg-[#ffffff] dark:bg-[#1f2937] rounded-xl shadow-2xl w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4"><h2 class="text-xl font-bold">Add Your Rating</h2><button id="close-rating-only-modal" class="p-1 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#2d3748]"><i data-lucide="x" class="w-5 h-5 text-[#718096] dark:text-[#cbd5e0]"></i></button></div>
+            <div class="bg-[#f7fafc] dark:bg-[#2d3748] p-4 rounded-lg">
+                <h3 class="font-semibold mb-2 text-center">Complete your review by adding a rating</h3>
+                <div class="flex justify-center items-center gap-1 text-[#bdbdbd] dark:text-[#616161] mb-4 rating-stars-container">
+                    <i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i><i data-lucide="star" class="w-7 h-7 cursor-pointer rating-star"></i>
+                </div>
+                <button id="submit-rating-only-btn" class="w-full bg-[#4299e1] text-[#ffffff] font-semibold py-2 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4] mt-4">Publish Review</button>
             </div>
         </div>
     </div>
@@ -576,6 +758,9 @@
                 modal.classList.add('hidden');
             }, 300);
         }
+        
+        let currentRatingMain = 0;
+
         function setupEventListeners() {
             const modals = [
                 { openBtn: 'open-students-modal', modal: 'students-modal' },
@@ -596,31 +781,57 @@
             const openRatingsBtnHero = document.getElementById('open-ratings-modal');
             openRatingsBtnHero?.addEventListener('click', () => openModal('ratings-modal'));
             document.getElementById('close-ratings-modal')?.addEventListener('click', () => closeModal('ratings-modal'));
+            
             const publishReviewBtn = document.getElementById('publish-review-btn');
             const reviewTitleInput = document.getElementById('review-title-input');
             const reviewTextInput = document.getElementById('review-text-input');
+
             publishReviewBtn?.addEventListener('click', (e) => {
                 e.preventDefault();
                 const title = reviewTitleInput.value.trim();
                 const text = reviewTextInput.value.trim();
+
+                if (currentRatingMain === 0) {
+                    alert('Please select a rating before publishing.');
+                    return;
+                }
+                
                 if (title && text) {
-                    console.log("Publishing review:", { title, text });
-                    alert(`Review "${title}" has been published!`);
+                    console.log("Submitting new review:", {
+                        rating: currentRatingMain,
+                        title: title,
+                        text: text
+                    });
+                    alert(`Review submitted!\nRating: ${currentRatingMain}/5\nTitle: ${title}`);
                     reviewTitleInput.value = '';
                     reviewTextInput.value = '';
+                    currentRatingMain = 0;
+                    document.querySelectorAll('.rating-star-main').forEach(star => {
+                        star.classList.remove('text-yellow-400', 'fill-current');
+                        star.classList.add('text-[#bdbdbd]', 'dark:text-[#616161]');
+                    });
                 } else {
                     alert('Please fill in both title and review text.');
                 }
             });
+            
+            document.getElementById('close-rating-only-modal')?.addEventListener('click', () => closeModal('rating-only-modal'));
             const submitRatingBtn = document.getElementById('submit-rating-btn');
             submitRatingBtn?.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (currentRating === 0) { alert('Please select a rating.'); return; }
-                console.log("Submitting rating:", { rating: currentRating });
+                const modalTitleInput = document.querySelector('#ratings-modal input');
+                const modalTextarea = document.querySelector('#ratings-modal textarea');
+                const title = modalTitleInput.value.trim();
+                const text = modalTextarea.value.trim();
+                console.log("Submitting rating and comment from hero:", { rating: currentRating, title, text });
                 alert(`You rated this course ${currentRating}/5`);
+                modalTitleInput.value = '';
+                modalTextarea.value = '';
                 currentRating = 0;
                 closeModal('ratings-modal');
             });
+
             document.getElementById('save-video-btn')?.addEventListener('click', () => {
                 const videoTitle = document.getElementById('video-modal-title').textContent;
                 alert(`Video "${videoTitle}" saved!`);
@@ -628,9 +839,14 @@
         }
         setupEventListeners();
         let currentRating = 0;
-        const starContainers = document.querySelectorAll('.rating-stars-container');
-        starContainers.forEach(container => {
-            const stars = Array.from(container.querySelectorAll('.rating-star'));
+        
+        function setupStarRating(containerSelector, onRating) {
+            const container = document.querySelector(containerSelector);
+            if (!container) return;
+            
+            const stars = Array.from(container.querySelectorAll('i[data-lucide="star"]'));
+            let rating = 0;
+
             stars.forEach((star, index) => {
                 star.addEventListener('mouseover', () => {
                     stars.forEach((s, i) => {
@@ -644,24 +860,23 @@
                     });
                 });
                 star.addEventListener('click', () => {
-                    currentRating = index + 1;
-                    starContainers.forEach(c => {
-                        const allStars = c.querySelectorAll('.rating-star');
-                        allStars.forEach((s, i) => {
-                             if (i < currentRating) {
-                                s.classList.add('text-yellow-400', 'fill-current');
-                                s.classList.remove('text-[#bdbdbd]', 'dark:text-[#616161]');
-                            } else {
-                                s.classList.remove('text-yellow-400', 'fill-current');
-                                s.classList.add('text-[#bdbdbd]', 'dark:text-[#616161]');
-                            }
-                        });
+                    rating = index + 1;
+                    onRating(rating);
+                    stars.forEach((s, i) => {
+                        if (i < rating) {
+                            s.classList.add('text-yellow-400', 'fill-current');
+                            s.classList.remove('text-[#bdbdbd]', 'dark:text-[#616161]');
+                        } else {
+                            s.classList.remove('text-yellow-400', 'fill-current');
+                            s.classList.add('text-[#bdbdbd]', 'dark:text-[#616161]');
+                        }
                     });
                 });
             });
+
             container.addEventListener('mouseout', () => {
                 stars.forEach((star, index) => {
-                    if (index < currentRating) {
+                    if (index < rating) {
                         star.classList.add('text-yellow-400', 'fill-current');
                         star.classList.remove('text-[#bdbdbd]', 'dark:text-[#616161]');
                     } else {
@@ -670,7 +885,10 @@
                     }
                 });
             });
-        });
+        }
+        
+        setupStarRating('.rating-stars-container', (rating) => { currentRating = rating; });
+        setupStarRating('.rating-stars-container-main', (rating) => { currentRatingMain = rating; });
 
         function setupHeroVideo() {
             const container = document.getElementById('main-hero-video-container');
@@ -735,9 +953,7 @@
 
             if (moduleCard3 && video3) {
                 moduleCard3.addEventListener('mouseover', () => {
-                    if (!moduleCard3.classList.contains('locked-module')) {
-                       video3.play();
-                    }
+                    video3.play();
                 });
 
                 moduleCard3.addEventListener('mouseout', () => {
@@ -749,13 +965,15 @@
         
         document.addEventListener("DOMContentLoaded", () => {
             animateProgress(30); 
-            populateLessons();
+            populateGrid();
             setupReplyButtons();
+            setupCommentToggle();
             updateVideoView();
             updatePresentationView();
             setupHoverVideo();
             setupHeroVideo();
         });
+        
         function setupReplyButtons() {
              document.querySelectorAll('.reply-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
@@ -771,6 +989,35 @@
                 });
             });
         }
+
+        function setupCommentToggle() {
+            document.querySelectorAll('.toggle-replies-btn').forEach(button => {
+                const commentContainer = button.closest('.flex-grow');
+                const initiallyHidden = commentContainer.querySelectorAll('.initially-hidden');
+                
+                if (initiallyHidden.length === 0) {
+                    button.disabled = true;
+                } else {
+                    button.addEventListener('click', () => {
+                        const isExpanded = button.dataset.expanded === 'true';
+                        
+                        initiallyHidden.forEach(reply => {
+                            reply.classList.toggle('hidden');
+                        });
+
+                        const buttonTextSpan = button.querySelector('.btn-reply-text');
+                        if (isExpanded) {
+                            button.dataset.expanded = 'false';
+                            buttonTextSpan.textContent = `Show ${initiallyHidden.length} more replies`;
+                        } else {
+                            button.dataset.expanded = 'true';
+                            buttonTextSpan.textContent = 'Hide older replies';
+                        }
+                    });
+                }
+            });
+        }
+        
         function animateProgress(targetPercent, duration = 1500) {
             const bar = document.getElementById('progress-bar');
             const percentText = document.getElementById('progress-percent');
@@ -787,118 +1034,100 @@
             requestAnimationFrame(step);
         }
         const lessonsData = [
-            {"status":"completed","img":"../oa-com/photo_1.png","time":"18 min","title":"Installing Dropbox","desc":"Follow this comprehensive, easy-to-use, step-by-step guide to effortlessly and securely download and install the powerful Dropbox application on your computer.","stats":["2 videos","1 slides"],"buttonText":"Review", "type": "lesson"},
-            {"status":"inprogress","img":"../oa-com/photo_2.png","time":"20 min","title":"First Steps After Installation","desc":"To complete the initial Dropbox setup, you must securely configure your account and effortlessly link all your devices wherever you are for seamless and rapid access to all your files.","stats":["1 videos","2 slides"],"buttonText":"Start", "type": "lesson"},
-            {"status":"ready","img":"../oa-com/photo_3.png","time":"25 min","title":"Your First Sync: Adding Files","desc":"Learn how to effortlessly add, sync, and securely verify your first files and folders to quickly understand the complete core functionality of your new Dropbox cloud storage system.","stats":["2 videos","1 slides"],"buttonText":"Start", "type": "lesson"},
-            {"status":"ready", "img":"../oa-com/photo_4.png", "time": "30 min", "title":"Check your knowledge", "desc":"This test will help you solidify your understanding of the 'Setting Up Dropbox' module.", "stats":["15 questions"], "buttonText":"Start", "type": "test"}
+            {
+                "status":"completed-passed", "img":"../oa-com/photo_1.png", "time":"18 min", "title":"Installing Dropbox", "desc":"Follow this comprehensive, easy-to-use, step-by-step guide to effortlessly and securely download and install the powerful Dropbox application on your computer.", "stats":["2 videos","1 slides","1 tests"], "buttonText":"100%"
+            },
+            {
+                "status":"completed-failed", "img":"../oa-com/photo_2.png", "time":"20 min", "title":"First Steps After Installation", "desc":"To complete the initial Dropbox setup, you must securely configure your account and effortlessly link all your devices wherever you are for seamless and rapid access to all your files.", "stats":["1 videos","2 slides","1 tests"], "buttonText":"Test"
+            },
+            {
+                "status":"ready-for-test", "img":"../oa-com/photo_3.png", "time":"25 min", "title":"Your First Sync: Adding Files", "desc":"Learn how to effortlessly add, sync, and securely verify your first files and folders to quickly understand the complete core functionality of your new Dropbox cloud storage system.", "stats":["2 videos","1 slides","2 tests"], "buttonText":"Test"
+            },
+            {
+                "status":"not-started", "img":"../oa-com/photo_4.png", "time":"15 min", "title":"Understanding the Interface", "desc":"A deep dive into the Dropbox user interface, exploring every menu and option to make you a power user.", "stats":["3 videos","1 slides","1 tests"], "buttonText":"Start"
+            },
+            {
+                "status":"locked", "img":"../oa-com/photo_1.png", "time":"30 min", "title":"Advanced Sharing Options", "desc":"Master the art of sharing files and folders with advanced permissions and security settings.", "stats":["4 videos","4 slides","2 tests"], "buttonText":"Start"
+            }
         ];
 
-        function createListItem(lesson) {
-            let cardClasses = 'p-4 rounded-xl shadow-sm flex items-center gap-6 border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#1f2937] dark:border-[#424242] transition-all duration-300 hover:shadow-xl';
-            if (lesson.status === 'completed') {
-                cardClasses = 'bg-[#48BB78]/20 dark:bg-[#68D391]/20 p-4 rounded-xl shadow-sm border border-[#48BB78]/30 dark:border-[#68D391] flex items-center gap-6 transition-all duration-300 hover:shadow-xl';
-            }
-            
-            let statsHtml = '';
-            const imageContent = `<img src="${lesson.img}" alt="Thumbnail" class="rounded-lg w-full h-[150px] object-cover">
-                                  <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">${lesson.time}</div>`;
-
-            if (lesson.type === 'test') {
-                statsHtml = `<span><i data-lucide="help-circle" class="inline w-3 h-3 mr-1"></i> ${lesson.stats[0]}</span>`;
-            } else {
-                statsHtml = `<span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> ${lesson.stats[0]}</span>
-                             <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> ${lesson.stats[1]}</span>`;
-            }
-
-            const buttonClasses = 'bg-[#4299e1] text-[#ffffff] font-semibold py-2 px-5 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4]';
-            const idAttribute = lesson.type === 'test' ? 'id="test-item"' : '';
-
-            return `
-            <div ${idAttribute} class="${cardClasses}">
-                <div class="relative w-[200px] flex-shrink-0">
-                    ${imageContent}
-                </div>
-                <div class="flex-grow">
-                    <h4 class="font-semibold">${lesson.title}</h4>
-                    <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2">${lesson.desc}</p>
-                    <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0]">
-                        ${statsHtml}
-                    </div>
-                </div>
-                <button class="${buttonClasses}">${lesson.buttonText}</button>
-            </div>
-            `;
-        }
-        
         function createGridItem(lesson) {
-            let cardClasses = 'bg-[#ffffff] dark:bg-[#1f2937] border border-[#e0e0e0] dark:border-[#424242] rounded-xl shadow-sm flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl';
-            if (lesson.status === 'completed') {
-                cardClasses = 'bg-[#48BB78]/20 dark:bg-[#68D391]/20 rounded-xl shadow-sm flex flex-col overflow-hidden border border-[#48BB78]/30 dark:border-[#68D391] transition-all duration-300 hover:shadow-xl';
-            }
+            let cardClasses = 'bg-white dark:bg-[#1f2937] border border-gray-200 dark:border-[#424242] rounded-xl shadow-sm flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl';
+            let buttonHtml = '';
+            let imageOverlayHtml = '';
+            let titleHtml = `<h4 class="font-semibold">${lesson.title}</h4>`;
 
-            let statsHtml = '';
-            const imageContent = `<img src="${lesson.img}" alt="Thumbnail" class="rounded-t-lg w-full aspect-video object-cover">
-                                  <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">${lesson.time}</div>`;
-
-            if (lesson.type === 'test') {
-                statsHtml = `<span><i data-lucide="help-circle" class="inline w-3 h-3 mr-1"></i> ${lesson.stats[0]}</span>`;
-            } else {
-                statsHtml = `<span><i data-lucide="video" class="inline w-3 h-3 mr-1"></i> ${lesson.stats[0]}</span>
-                             <span><i data-lucide="presentation" class="inline w-3 h-3 mr-1"></i> ${lesson.stats[1]}</span>`;
+            switch(lesson.status) {
+                case 'completed-passed':
+                    cardClasses = 'bg-green-500/10 dark:bg-green-500/20 border border-green-500/30 rounded-xl shadow-sm flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl';
+                    buttonHtml = `<button class="w-full bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">${lesson.buttonText}</button>`;
+                    break;
+                case 'completed-failed':
+                    cardClasses = 'bg-red-500/10 dark:bg-red-500/20 border border-red-500/30 rounded-xl shadow-sm flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl';
+                    buttonHtml = `<button class="w-full bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">${lesson.buttonText}</button>`;
+                    titleHtml = `
+                        <div class="flex justify-between items-center w-full">
+                            <h4 class="font-semibold">${lesson.title}</h4>
+                            <div class="w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold cursor-pointer flex-shrink-0" title="Test Failed">i</div>
+                        </div>`;
+                    break;
+                case 'ready-for-test':
+                    buttonHtml = `<button class="w-full bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">${lesson.buttonText}</button>`;
+                    break;
+                case 'not-started':
+                    buttonHtml = `<button class="w-full bg-[#4299e1] text-white font-semibold py-2 px-5 rounded-lg hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4]">${lesson.buttonText}</button>`;
+                    break;
+                case 'locked':
+                    cardClasses += ' opacity-60';
+                    imageOverlayHtml = `<div class="absolute inset-0 bg-black/50 rounded-t-lg flex items-center justify-center"><i data-lucide="lock" class="w-8 h-8 text-white"></i></div>`;
+                    buttonHtml = `<button class="w-full bg-[#e0e0e0] text-[#9e9e9e] dark:bg-[#2d3748] dark:text-[#718096] font-semibold py-2 px-5 rounded-lg cursor-not-allowed">${lesson.buttonText}</button>`;
+                    break;
             }
-            
-            const buttonClasses = 'bg-[#4299e1] text-[#ffffff] hover:bg-[#3182ce] dark:bg-[#63b3ed] dark:text-[#000000] dark:hover:bg-[#90cdf4]';
-            const idAttribute = lesson.type === 'test' ? 'id="test-item"' : '';
 
             return `
-            <div ${idAttribute} class="${cardClasses}">
-                <div class="relative">${imageContent}</div>
-                <div class="p-4 flex flex-col flex-grow">
-                    <h4 class="font-semibold">${lesson.title}</h4>
-                    <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2 mt-1 flex-grow">${lesson.desc}</p>
-                    <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0] mb-4">${statsHtml}</div>
-                    <button class="${buttonClasses} w-full font-semibold py-2 px-5 rounded-lg">${lesson.buttonText}</button>
-                </div>
-            </div>`;
+                <div class="${cardClasses}">
+                    <div class="relative aspect-square">
+                        <img src="${lesson.img}" alt="Lesson thumbnail" class="rounded-t-lg w-full h-full object-cover">
+                        ${imageOverlayHtml}
+                        <div class="absolute top-1 right-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">${lesson.time}</div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        ${titleHtml}
+                        <p class="text-sm text-[#718096] dark:text-[#cbd5e0] mb-2 mt-1 flex-grow">${lesson.desc}</p>
+                        <div class="flex items-center gap-4 text-xs text-[#718096] dark:text-[#cbd5e0] mb-4">
+                            ${lesson.stats.map(stat => `<span><i data-lucide="${stat.includes('video') ? 'video' : (stat.includes('slide') ? 'presentation' : 'file-question')}" class="inline w-3 h-3 mr-1"></i> ${stat}</span>`).join('')}
+                        </div>
+                        ${buttonHtml}
+                    </div>
+                </div>`;
         }
 
-        const lessonsListContainer = document.getElementById('lessons-list');
-        const lessonsGridContainer = document.getElementById('lessons-grid');
-
-        function populateLessons() {
-            if(!lessonsListContainer || !lessonsGridContainer) return;
-            lessonsListContainer.innerHTML = '';
-            lessonsGridContainer.innerHTML = '';
-
-            lessonsData.forEach(lesson => {
-                lessonsListContainer.innerHTML += createListItem(lesson);
-                lessonsGridContainer.innerHTML += createGridItem(lesson);
-            });
-            
+        const lessonsGrid = document.getElementById('lessons-grid');
+        function populateGrid() {
+            if(!lessonsGrid) return;
+            lessonsGrid.innerHTML = lessonsData.map(createGridItem).join('');
             lucide.createIcons();
         }
-
         const gridViewBtn = document.getElementById('grid-view-btn');
         const listViewBtn = document.getElementById('list-view-btn');
-        
+        const lessonsList = document.getElementById('lessons-list');
         gridViewBtn?.addEventListener('click', () => {
-            lessonsListContainer.classList.add('hidden');
-            lessonsGridContainer.classList.remove('hidden');
-            lessonsGridContainer.classList.add('grid');
+            lessonsList.classList.add('hidden');
+            lessonsGrid.classList.remove('hidden');
+            lessonsGrid.classList.add('grid');
             gridViewBtn.classList.add('bg-[#4299e1]', 'text-[#ffffff]', 'dark:bg-[#63b3ed]', 'dark:text-[#000000]');
-            gridViewBtn.classList.remove('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'hover:bg-[#f5f5f5]', 'dark:hover:bg-[#2d3748]');
+            gridViewBtn.classList.remove('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'bg-white', 'dark:bg-transparent');
             listViewBtn.classList.remove('bg-[#4299e1]', 'text-[#ffffff]', 'dark:bg-[#63b3ed]', 'dark:text-[#000000]');
-            listViewBtn.classList.add('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'hover:bg-[#f5f5f5]', 'dark:hover:bg-[#2d3748]');
+            listViewBtn.classList.add('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'bg-white', 'dark:bg-transparent');
         });
-
         listViewBtn?.addEventListener('click', () => {
-            lessonsListContainer.classList.remove('hidden');
-            lessonsGridContainer.classList.add('hidden');
-            lessonsGridContainer.classList.remove('grid');
+            lessonsList.classList.remove('hidden');
+            lessonsGrid.classList.add('hidden');
+            lessonsGrid.classList.remove('grid');
             listViewBtn.classList.add('bg-[#4299e1]', 'text-[#ffffff]', 'dark:bg-[#63b3ed]', 'dark:text-[#000000]');
-            listViewBtn.classList.remove('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'hover:bg-[#f5f5f5]', 'dark:hover:bg-[#2d3748]');
+            listViewBtn.classList.remove('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'bg-white', 'dark:bg-transparent');
             gridViewBtn.classList.remove('bg-[#4299e1]', 'text-[#ffffff]', 'dark:bg-[#63b3ed]', 'dark:text-[#000000]');
-            gridViewBtn.classList.add('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'hover:bg-[#f5f5f5]', 'dark:hover:bg-[#2d3748]');
+            gridViewBtn.classList.add('border', 'border-[#e0e0e0]', 'dark:border-[#424242]', 'bg-white', 'dark:bg-transparent');
         });
 
         const presentations = [{"name":"Intro to Dropbox","slides":5},{"name":"Syncing Files","slides":8}];

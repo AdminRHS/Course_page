@@ -51,6 +51,48 @@
         .dark .inset-shadow {
             box-shadow: inset 2px 2px 5px #000000, inset -2px -2px 5px #2d3748;
         }
+
+        /* Custom Department Colors from index.html */
+        :root {
+            --designers-color: #6D28D9;
+            --managers-color: #DC2626;
+            --marketers-color: #EC4899;
+            --developers-color: #147857;
+            --videographers-color: #F97316;
+            --all-color: #4B5563; /* Gray */
+            --other-color: #4B5563;
+        }
+
+        .tag { border: 1px solid transparent; }
+        .profession-tag { background-color: rgba(75, 85, 99, 0.1); color: var(--other-color); }
+
+        /* All */
+        .filter-btn.filter-all.active { color: var(--all-color); background-color: rgba(75, 85, 99, 0.15); border-color: var(--all-color); }
+        .dark .filter-btn.filter-all.active { color: #D1D5DB; border-color: #D1D5DB;}
+
+        /* Designers */
+        .filter-btn.filter-designers.active, .tag-designers { color: var(--designers-color); background-color: rgba(109, 40, 217, 0.1); border-color: var(--designers-color); }
+        .dark .filter-btn.filter-designers.active, .dark .tag-designers { color: #A78BFA; border-color: #A78BFA; }
+
+        /* Managers */
+        .filter-btn.filter-managers.active, .tag-managers { color: var(--managers-color); background-color: rgba(220, 38, 38, 0.1); border-color: var(--managers-color); }
+        .dark .filter-btn.filter-managers.active, .dark .tag-managers { color: #F87171; border-color: #F87171; }
+
+        /* Marketers */
+        .filter-btn.filter-marketers.active, .tag-marketers { color: var(--marketers-color); background-color: rgba(236, 72, 153, 0.1); border-color: var(--marketers-color); }
+        .dark .filter-btn.filter-marketers.active, .dark .tag-marketers { color: #F472B6; border-color: #F472B6; }
+
+        /* Developers */
+        .filter-btn.filter-developers.active, .tag-developers { color: var(--developers-color); background-color: rgba(16, 185, 129, 0.1); border-color: var(--developers-color); }
+        .dark .filter-btn.filter-developers.active, .dark .tag-developers { color: #34D399; border-color: #34D399; }
+        
+        /* Videographers */
+        .filter-btn.filter-videographers.active, .tag-videographers { color: var(--videographers-color); background-color: rgba(249, 115, 22, 0.1); border-color: var(--videographers-color); }
+        .dark .filter-btn.filter-videographers.active, .dark .tag-videographers { color: #FB923C; border-color: #FB923C; }
+
+        /* Other/Default Tag */
+         .tag-other { color: var(--other-color); background-color: rgba(75, 85, 99, 0.1); border-color: var(--other-color); }
+        .dark .tag-other { color: #D1D5DB; border-color: #D1D5DB; }
     </style>
 </head>
 <body class="text-[#2d3748] dark:text-[#f7fafc] transition-colors duration-300">
@@ -742,13 +784,23 @@
     </div>
     
     <div id="professions-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
-        <div id="professions-modal-content" class="bg-[#ffffff] dark:bg-[#1f2937] rounded-xl shadow-2xl w-full max-w-2xl p-6">
+        <div id="professions-modal-content" class="bg-[#ffffff] dark:bg-[#1f2937] rounded-xl shadow-2xl w-full max-w-3xl p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold">This course is suitable for</h2>
                 <button id="close-professions-modal" class="p-1 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#2d3748]"><i data-lucide="x" class="w-5 h-5 text-[#718096] dark:text-[#cbd5e0]"></i></button>
             </div>
-            <div id="professions-modal-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[60vh] overflow-y-auto p-1">
+            
+            <div id="department-filters" class="flex flex-wrap items-center gap-2 mb-4 pb-4 border-b border-[#e0e0e0] dark:border-[#424242]">
+                <button class="filter-btn filter-all active px-4 py-2 text-sm font-semibold rounded-full border border-transparent" data-dept="all">All</button>
+                <button class="filter-btn filter-designers px-4 py-2 text-sm font-semibold rounded-full border border-transparent hover:bg-gray-200 dark:hover:bg-gray-700" data-dept="designers">Designers</button>
+                <button class="filter-btn filter-developers px-4 py-2 text-sm font-semibold rounded-full border border-transparent hover:bg-gray-200 dark:hover:bg-gray-700" data-dept="developers">Developers</button>
+                <button class="filter-btn filter-managers px-4 py-2 text-sm font-semibold rounded-full border border-transparent hover:bg-gray-200 dark:hover:bg-gray-700" data-dept="managers">Managers</button>
+                <button class="filter-btn filter-marketers px-4 py-2 text-sm font-semibold rounded-full border border-transparent hover:bg-gray-200 dark:hover:bg-gray-700" data-dept="marketers">Marketers</button>
+                <button class="filter-btn filter-videographers px-4 py-2 text-sm font-semibold rounded-full border border-transparent hover:bg-gray-200 dark:hover:bg-gray-700" data-dept="videographers">Videographers</button>
             </div>
+            
+            <div id="professions-modal-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-h-[50vh] min-h-[50vh] overflow-y-auto p-1">
+                </div>
         </div>
     </div>
 
@@ -762,7 +814,6 @@
         themeToggle.addEventListener('click', () => {
             htmlEl.classList.toggle('dark');
             localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
-            lucide.createIcons();
         });
         
         function openModal(modalId) {
@@ -789,6 +840,16 @@
         }
         
         let currentRatingMain = 0;
+
+        const professionsByDept = {
+            'designers': ['3d designer', 'Graphic designer', 'Illustrator', 'Interior designer', 'Motion designer', 'UI UX designer', 'Web designer', 'Wordpress designer', 'Vizualizer'],
+            'developers': ['Back end developer', 'Full stack developer', 'Front end developer', 'Mobile developer', 'QA', 'System administrator', 'Prompt engineer'],
+            'managers': ['Account manager', 'Content manager', 'Event manager', 'Financial manager', 'HR manager', 'Investment manager', 'Influencer manager', 'Product manager', 'Project manager', 'PR manager', 'Sales manager', 'SEO manager', 'Social media manager', 'beginner'],
+            'marketers': ['Affiliate manager', 'Copywriter', 'Email marketer', 'Lead generator', 'Linkbuilder', 'Media buyer', 'PPC specialist', 'Targetologist'],
+            'videographers': ['Mobile video editor', 'Video editor'],
+            'other': ['Analyst', 'Chat operator', 'Personal assistant', 'Proofreader', 'Recruiter', 'Translator', 'Tourism manager']
+        };
+        const allProfessions = Object.values(professionsByDept).flat().sort();
 
         function setupEventListeners() {
             const modals = [
@@ -993,31 +1054,66 @@
             }
         }
         
-        const professions = [
-            '3d designer', 'Account manager', 'Affiliate manager', 'Chat operator', 'Content manager', 
-            'Analyst', 'Back end developer', 'Copywriter', 'Email marketer', 'Event manager', 
-            'Full stack developer', 'Financial manager', 'Front end developer', 'Graphic designer', 
-            'Investment manager', 'Influencer manager', 'Illustrator', 'HR manager', 'Interior designer', 
-            'Lead generator', 'Linkbuilder', 'Media buyer', 'Mobile developer', 'Mobile video editor', 
-            'PPC specialist', 'PR manager', 'Product manager', 'Motion designer', 'Personal assistant', 
-            'Project manager', 'Prompt engineer', 'Proofreader', 'Recruiter', 'QA', 'UI UX designer', 
-            'Translator', 'Tourism manager', 'System administrator', 'Social media manager', 'Targetologist', 
-            'Sales manager', 'SEO manager', 'Wordpress designer', 'Video editor', 'Vizualizer', 'Web designer', 'beginner'
-        ];
-
         function populateProfessions() {
             const inlineList = document.getElementById('professions-inline-list');
             const modalList = document.getElementById('professions-modal-list');
             if (!inlineList || !modalList) return;
 
-            inlineList.innerHTML = professions.slice(0, 4).map(p => `<span class="bg-white/20 text-white/80 text-xs px-2 py-1 rounded-md">${p}</span>`).join('');
-            modalList.innerHTML = professions.map(p => `<div class="bg-gray-100 dark:bg-gray-700 p-2 rounded-md text-center text-sm">${p}</div>`).join('');
+            inlineList.innerHTML = allProfessions.slice(0, 4).map(p => `<span class="bg-white/20 text-white/80 text-xs px-2 py-1 rounded-md capitalize">${p}</span>`).join('');
+            
+            let modalHtml = '';
+            allProfessions.forEach(prof => {
+                let dept = 'other';
+                for (const d in professionsByDept) {
+                    if (professionsByDept[d].includes(prof)) {
+                        dept = d;
+                        break;
+                    }
+                }
+                const styleClass = `tag-${dept}`;
+                modalHtml += `<div class="profession-tag ${styleClass} text-center text-sm font-semibold p-2 rounded-lg capitalize" data-dept="${dept}">${prof}</div>`;
+            });
+            modalList.innerHTML = modalHtml;
+        }
+
+        function setupDepartmentFilters() {
+            const filterContainer = document.getElementById('department-filters');
+            if (!filterContainer) return;
+            
+            const filterButtons = filterContainer.querySelectorAll('.filter-btn');
+            const professionsContainer = document.getElementById('professions-modal-list');
+            if (!professionsContainer) return;
+            const professionTags = professionsContainer.querySelectorAll('.profession-tag');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const selectedDept = button.dataset.dept;
+
+                    // Toggle active class on buttons
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.add('hover:bg-gray-200', 'dark:hover:bg-gray-700');
+                    });
+                    button.classList.add('active');
+                    button.classList.remove('hover:bg-gray-200', 'dark:hover:bg-gray-700');
+
+                    // Filter tags
+                    professionTags.forEach(tag => {
+                        if (selectedDept === 'all' || tag.dataset.dept === selectedDept) {
+                            tag.style.display = 'block';
+                        } else {
+                            tag.style.display = 'none';
+                        }
+                    });
+                });
+            });
         }
 
         document.addEventListener("DOMContentLoaded", () => {
             animateProgress(30); 
             populateGrid();
             populateProfessions();
+            setupDepartmentFilters();
             setupReplyButtons();
             setupCommentToggle();
             updateVideoView();

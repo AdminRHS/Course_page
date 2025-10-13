@@ -32,7 +32,7 @@
         .dark ::-webkit-scrollbar-thumb:hover { background: #616161; }
 
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../oa-com/video.png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('video.png');
             background-size: cover;
         }
         .modal-enter { animation: modal-enter 0.3s ease-out forwards; }
@@ -1427,4 +1427,5 @@
         document.getElementById('video-prev')?.addEventListener('click', () => { currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length; updateVideoView(); });
     </script>
 </body>
+
 </html>

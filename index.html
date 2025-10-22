@@ -32,8 +32,9 @@
         .dark ::-webkit-scrollbar-thumb:hover { background: #616161; }
 
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('video.png');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('bird.png');
             background-size: cover;
+            background-position: right center; /* <-- ЗМІНУ ВНЕСЕНО ТУТ */
         }
         .modal-enter { animation: modal-enter 0.3s ease-out forwards; }
         .modal-leave { animation: modal-leave 0.3s ease-in forwards; }
@@ -185,6 +186,11 @@
                                 </div>
                                 <button id="open-professions-modal" class="font-semibold hover:underline whitespace-nowrap">More...</button>
                             </div>
+                        </div>
+
+                        <div class="mt-4 text-sm text-white/80 space-y-1">
+                            <div class="flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-2"></i> Created: Oct 20, 2025</div>
+                            <div class="flex items-center"><i data-lucide="history" class="w-4 h-4 mr-2"></i> Last updated: Oct 22, 2025</div>
                         </div>
                         <div class="mt-6">
                             <a href="#lessons-section" class="inline-block bg-[#63b3ed] text-[#1a202c] font-bold py-2 px-16 rounded-lg hover:bg-[#90cdf4] transition-colors text-lg">
@@ -663,7 +669,7 @@
                                     </div>
                                 </div>
                                 <div class="rounded-xl shadow-sm overflow-hidden border border-[#e0e0e0] bg-[#ffffff] dark:bg-[#2d3748] dark:border-[#424242] hover:shadow-xl transition-all duration-300">
-                                    <img src="../oa-com/video_copy" alt="Similar course" class="w-full aspect-video object-cover">
+                                    <img src="../oa-com/video_copy.png" alt="Similar course" class="w-full aspect-video object-cover">
                                     <div class="p-4">
                                         <div class="flex justify-between items-center mb-1">
                                             <h4 class="font-semibold">iCloud Fundamentals</h4>
@@ -714,7 +720,7 @@
             </div>
 
             <div class="relative mb-4">
-                <input type="text" id="student-search-input" placeholder="Search by name or email..." class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors">
+                <input type="text" id="student-search-input" placeholder="Search by name or email..." class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray600 rounded-lg bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors">
                 <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
             </div>
             
